@@ -87,7 +87,7 @@ export default function SignUp() {
                 autoComplete="lname"
               />
             </Grid>
-            <Grid item xs={12} md={12}>
+            <Grid item xs={12} md={6}>
               <TextField
                 variant="outlined"
                 required
@@ -98,7 +98,7 @@ export default function SignUp() {
                 autoComplete="email"
               />
             </Grid>
-            <Grid item xs={12} md={12}>
+            <Grid item xs={12} md={6}>
               <TextField
                 variant="outlined"
                 required
@@ -106,6 +106,17 @@ export default function SignUp() {
                 id="phone"
                 label="Phone number"
                 name="phone"
+                autoComplete="number"
+              />
+            </Grid>
+            <Grid item xs={12} md={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="walletAddress"
+                label="Wallet Address"
+                name="walletAddress"
                 autoComplete="number"
               />
             </Grid>
