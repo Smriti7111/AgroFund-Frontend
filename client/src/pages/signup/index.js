@@ -27,6 +27,9 @@ function Copyright() {
 }
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -142,8 +145,9 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12} md={12}>
               <FormControlLabel
+                classes={classes}
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I agree to the terms and conditions and the privacy policy of AgroFund"
+                label="I agree to the terms and conditions"
               />
             </Grid>
           </Grid>
