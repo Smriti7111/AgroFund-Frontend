@@ -27,6 +27,9 @@ function Copyright() {
 }
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -50,7 +53,7 @@ export default function SignUp() {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="sm">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -84,7 +87,7 @@ export default function SignUp() {
                 autoComplete="lname"
               />
             </Grid>
-            <Grid item xs={12} md={12}>
+            <Grid item xs={12} md={6}>
               <TextField
                 variant="outlined"
                 required
@@ -95,7 +98,7 @@ export default function SignUp() {
                 autoComplete="email"
               />
             </Grid>
-            <Grid item xs={12} md={12}>
+            <Grid item xs={12} md={6}>
               <TextField
                 variant="outlined"
                 required
@@ -103,6 +106,17 @@ export default function SignUp() {
                 id="phone"
                 label="Phone number"
                 name="phone"
+                autoComplete="number"
+              />
+            </Grid>
+            <Grid item xs={12} md={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="walletAddress"
+                label="Wallet Address"
+                name="walletAddress"
                 autoComplete="number"
               />
             </Grid>
@@ -142,8 +156,9 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12} md={12}>
               <FormControlLabel
+                classes={classes}
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I agree to the terms and conditions and the privacy policy of AgroFund"
+                label="I agree to the terms and conditions"
               />
             </Grid>
           </Grid>
