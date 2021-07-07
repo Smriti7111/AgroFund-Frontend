@@ -6,13 +6,12 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
+const axios = require("axios");
 
 const App = () => {
   const [data, setData] = useState(null);
   useEffect(() => {
-    fetch("http://localhost:9000/testAPI")
-      .then((res) => res.text())
-      .then((data) => setData(data));
+    axios.get("http://localhost:8888/testAPI").then((res) => setData(res.data));
   }, []);
 
   // state = { web3: null, accounts: null, contract: null };
