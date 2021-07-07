@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,6 +13,11 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+// Context Import
+import { walletContext } from "../../Context/WalletContext";
+
+// Functions import
+import { getWalletAddress } from "../../helpers/GetWalletAddress";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -51,7 +56,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
-
+  const [walletAddress, setWalletAddress] = useContext(walletContext);
+  useEffect(() => {
+    console.log(getWalletAddress);
+    setWalletAddress(getWalletAddress);
+  }, []);
   return (
     <Container component="main" maxWidth="sm">
       <CssBaseline />
@@ -173,7 +182,7 @@ export default function SignUp() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="" variant="body2">
+              <Link href="/login" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
