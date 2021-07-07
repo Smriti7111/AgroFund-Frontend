@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import SimpleStorageContract from "./contracts/SimpleStorage.json";
 // import getWeb3 from "./getWeb3";
@@ -8,6 +8,13 @@ import Login from "./pages/login";
 import SignUp from "./pages/signup";
 
 const App = () => {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    fetch("http://localhost:9000/testAPI")
+      .then((res) => res.text())
+      .then((data) => setData(data));
+  }, []);
+
   // state = { web3: null, accounts: null, contract: null };
 
   // componentDidMount = async () => {
@@ -64,10 +71,10 @@ const App = () => {
             <Route exact path="/signup" component={SignUp}></Route>
           </Switch>
           {/* <p>
-              Try changing the value stored on <strong>line 42</strong> of
-              App.js.
-            </p>
-            <div>The stored value is: {this.state.storageValue}</div> */}
+            Try changing the value stored on <strong>line 42</strong> of App.js.
+          </p>
+          <div>The stored value is: {this.state.storageValue}</div> */}
+          <p>{!data ? "Loading..." : data}</p>
         </div>
       </Router>
     </>
