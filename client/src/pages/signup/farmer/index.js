@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -14,10 +14,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
 // Context Import
-import { walletContext } from "../../Context/WalletContext";
+import { walletContext } from "../../../Context/WalletContext";
 
 // Functions import
-import { getWalletAddress } from "../../helpers/GetWalletAddress";
+import { getWalletAddress } from "../../../helpers/GetWalletAddress";
+import axios from "axios";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -54,13 +55,58 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignUpFarmer() {
   const classes = useStyles();
+
   const [walletAddress, setWalletAddress] = useContext(walletContext);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    address: "",
+    walletAddress: "",
+    contact: "",
+    password: "",
+    confirmPassword: "",
+    check: false,
+  });
+
   useEffect(() => {
     console.log(getWalletAddress);
     setWalletAddress(getWalletAddress);
   }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios({
+      method: "POST",
+      url: "/api/farmer",
+      data: formData,
+    }).then(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "check") {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: !prevState.check,
+      }));
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
+  };
+
   return (
     <Container component="main" maxWidth="sm">
       <CssBaseline />
@@ -71,29 +117,20 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form method="POST" className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={6}>
+            <Grid item xs={12} sm={12} md={12}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
+                autoComplete="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="name"
+                label="Name"
                 autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -104,6 +141,8 @@ export default function SignUp() {
                 id="email"
                 label="Email Address"
                 name="email"
+                value={formData.email}
+                onChange={handleChange}
                 autoComplete="email"
               />
             </Grid>
@@ -114,7 +153,9 @@ export default function SignUp() {
                 fullWidth
                 id="phone"
                 label="Phone number"
-                name="phone"
+                name="contact"
+                value={formData.contact}
+                onChange={handleChange}
                 autoComplete="number"
               />
             </Grid>
@@ -126,6 +167,8 @@ export default function SignUp() {
                 id="walletAddress"
                 label="Wallet Address"
                 name="walletAddress"
+                value={formData.walletAddress}
+                onChange={handleChange}
                 autoComplete="number"
               />
             </Grid>
@@ -137,6 +180,8 @@ export default function SignUp() {
                 id="address"
                 label="Address"
                 name="address"
+                value={formData.address}
+                onChange={handleChange}
                 autoComplete="address"
               />
             </Grid>
@@ -146,6 +191,8 @@ export default function SignUp() {
                 required
                 fullWidth
                 name="password"
+                value={formData.password}
+                onChange={handleChange}
                 label="Password"
                 type="password"
                 id="password"
@@ -157,7 +204,9 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                name="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
                 label="Confirm Password"
                 type="password"
                 autoComplete="current-password"
@@ -165,7 +214,10 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12} md={12}>
               <FormControlLabel
-                classes={classes}
+                className={classes.root}
+                name="check"
+                value={formData.check}
+                onChange={handleChange}
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                 label="I agree to the terms and conditions"
               />
@@ -173,6 +225,7 @@ export default function SignUp() {
           </Grid>
           <Button
             type="submit"
+            onClick={handleSubmit}
             fullWidth
             variant="contained"
             color="primary"

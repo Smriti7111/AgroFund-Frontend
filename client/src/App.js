@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import "./App.css";
 import Login from "./pages/login";
-import SignUp from "./pages/signup";
+import SignUpFarmer from "./pages/signup/farmer";
+import SignUpInvestor from "./pages/signup/investor";
 const axios = require("axios");
 
 const App = () => {
@@ -67,7 +68,12 @@ const App = () => {
         <div className="App">
           <Switch>
             <Route exact path="/login" component={Login}></Route>
-            <Route exact path="/signup" component={SignUp}></Route>
+            <Route exact path="/signup-farmer" component={SignUpFarmer}></Route>
+            <Route
+              exact
+              path="/signup-investor"
+              component={SignUpInvestor}
+            ></Route>
           </Switch>
           {/* <p>
             Try changing the value stored on <strong>line 42</strong> of App.js.

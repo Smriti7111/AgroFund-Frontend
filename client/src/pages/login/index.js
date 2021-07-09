@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -18,6 +18,7 @@ import { walletContext } from "../../Context/WalletContext";
 
 // Functions import
 import { getWalletAddress } from "../../helpers/GetWalletAddress";
+import axios from "axios";
 
 function Copyright() {
   return (
@@ -63,6 +64,35 @@ export default function Login() {
     setWalletAddress(getWalletAddress);
   }, []);
 
+  const [loginData, setLoginData] = useState({
+    walletAddress: "",
+    password: "",
+  });
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    axios({
+      method: "POST",
+      url: "/login",
+      data: loginData,
+    }).then(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -73,7 +103,7 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Log In
         </Typography>
-        <form className={classes.form} noValidate>
+        <form method="POST" className={classes.form} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
@@ -81,7 +111,9 @@ export default function Login() {
             fullWidth
             id="username"
             label="Username"
-            name="username"
+            name="walletAddress"
+            value={loginData.walletAddress}
+            onChange={handleChange}
             autoComplete="username"
             autoFocus
           />
@@ -91,13 +123,15 @@ export default function Login() {
             required
             fullWidth
             name="password"
+            value={loginData.password}
+            onChange={handleChange}
             label="Password"
             type="password"
             id="password"
             autoComplete="current-password"
           />
           <FormControlLabel
-            classes={classes}
+            className={classes.root}
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
@@ -106,6 +140,7 @@ export default function Login() {
             fullWidth
             variant="contained"
             color="primary"
+            onClick={handleLogin}
             className={classes.submit}
           >
             Log In
