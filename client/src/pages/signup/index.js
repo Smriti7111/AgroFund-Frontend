@@ -57,7 +57,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
+
   const [walletAddress, setWalletAddress] = useContext(walletContext);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -68,10 +70,12 @@ export default function SignUp() {
     confirmPassword: "",
     check: false,
   });
+
   useEffect(() => {
     console.log(getWalletAddress);
     setWalletAddress(getWalletAddress);
   }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios({
@@ -87,6 +91,7 @@ export default function SignUp() {
       }
     );
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name == "check") {
@@ -101,6 +106,7 @@ export default function SignUp() {
       }));
     }
   };
+
   return (
     <Container component="main" maxWidth="sm">
       <CssBaseline />
