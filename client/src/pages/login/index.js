@@ -77,7 +77,11 @@ export default function Login() {
       data: loginData,
     }).then(
       (response) => {
-        console.log(response);
+        let resData = response.data;
+        sessionStorage.setItem("token", resData.other.token);
+        console.log(
+          `sessionStorage set with token value ${resData.other.token}`
+        );
       },
       (error) => {
         console.log(error);
