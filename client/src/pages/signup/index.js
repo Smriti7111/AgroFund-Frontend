@@ -59,8 +59,7 @@ export default function SignUp() {
   const classes = useStyles();
   const [walletAddress, setWalletAddress] = useContext(walletContext);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
     address: "",
     walletAddress: "",
@@ -75,6 +74,18 @@ export default function SignUp() {
   }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
+    axios({
+      method: "POST",
+      url: "/api/farmer",
+      data: formData,
+    }).then(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -100,36 +111,20 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form
-          className={classes.form}
-          noValidate
-        >
+        <form method="POST" className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={6}>
+            <Grid item xs={12} sm={12} md={12}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
-                value={formData.firstName}
+                autoComplete="name"
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="name"
+                label="Name"
                 autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleChange}
-                autoComplete="lname"
               />
             </Grid>
             <Grid item xs={12} md={6}>
