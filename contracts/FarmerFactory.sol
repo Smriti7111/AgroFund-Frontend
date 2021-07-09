@@ -1,23 +1,29 @@
 pragma solidity ^0.5.0;
-
+pragma experimental ABIEncoderV2;
 contract FarmerFactory {
     struct Farmer {
-        uint id;
+        string id;
         bool hasProject;
         bool isVerified;
     }
 
     Farmer[] public farmers;
     
-    mapping(address => uint) public farmerIndex;
+    // Maps farmer id to index
+    mapping(string=> uint) public farmerIndex;
 
-    function createFarmer(uint _id, bool _hasProject, bool _isVerified) public {
-        uint index = farmers.push(Farmer(_id, _hasProject, _isVerified)) - 1;
-        farmerIndex[msg.sender] = index; 
+    function _createFarmer(string memory _id) public {
+        uint index = farmers.push(Farmer(_id, false, false)) - 1;
+        farmerIndex[_id] = index; 
     }
 
-    function verifyFarmer(bool status,address farmer) public {
-        uint index = farmerIndex[farmer];
-        farmers[index].isVerified = status;
+    function _verifyFarmer(string memory _farmerId) public {
+        uint index = farmerIndex[_farmerId];
+        farmers[index].isVerified = true;
+    }
+
+    function _getFarmer(string memory _farmerId) public view returns(Farmer memory){
+        uint index=farmerIndex[_farmerId];
+        return farmers[index];
     }
 }
