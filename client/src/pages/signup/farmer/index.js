@@ -14,10 +14,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
 // Context Import
-import { walletContext } from "../../Context/WalletContext";
+import { walletContext } from "../../../Context/WalletContext";
 
 // Functions import
-import { getWalletAddress } from "../../helpers/GetWalletAddress";
+import { getWalletAddress } from "../../../helpers/GetWalletAddress";
 import axios from "axios";
 function Copyright() {
   return (

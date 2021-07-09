@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import "./App.css";
 import Login from "./pages/login";
-import SignUp from "./pages/signup";
+import SignUp from "./pages/signup/farmer";
 const axios = require("axios");
 
 const App = () => {
