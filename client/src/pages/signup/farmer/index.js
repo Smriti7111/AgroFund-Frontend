@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignUpFarmer() {
   const classes = useStyles();
 
   const [walletAddress, setWalletAddress] = useContext(walletContext);
@@ -94,7 +94,7 @@ export default function SignUp() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name == "check") {
+    if (name === "check") {
       setFormData((prevState) => ({
         ...prevState,
         [name]: !prevState.check,
