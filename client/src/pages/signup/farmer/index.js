@@ -71,10 +71,19 @@ export default function SignUpFarmer() {
     check: false,
   });
 
+  // Get Wallet Address
   useEffect(() => {
-    console.log(getWalletAddress);
-    setWalletAddress(getWalletAddress);
+    const getWallet = async () => {
+      let address = await getWalletAddress();
+      setWalletAddress(address);
+    };
+    getWallet();
   }, []);
+
+  // Set Wallet address to input field
+  useEffect(() => {
+    setFormData({ ...formData, walletAddress: walletAddress });
+  }, [walletAddress]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -119,6 +128,7 @@ export default function SignUpFarmer() {
         </Typography>
         <form method="POST" className={classes.form} noValidate>
           <Grid container spacing={2}>
+            {/* Name */}
             <Grid item xs={12} sm={12} md={12}>
               <TextField
                 autoComplete="name"
@@ -133,6 +143,8 @@ export default function SignUpFarmer() {
                 autoFocus
               />
             </Grid>
+
+            {/* Email Address */}
             <Grid item xs={12} md={6}>
               <TextField
                 variant="outlined"
@@ -146,6 +158,8 @@ export default function SignUpFarmer() {
                 autoComplete="email"
               />
             </Grid>
+
+            {/* Phone Number */}
             <Grid item xs={12} md={6}>
               <TextField
                 variant="outlined"
@@ -159,6 +173,7 @@ export default function SignUpFarmer() {
                 autoComplete="number"
               />
             </Grid>
+            {/* Wallet Address */}
             <Grid item xs={12} md={12}>
               <TextField
                 variant="outlined"
@@ -170,6 +185,7 @@ export default function SignUpFarmer() {
                 value={formData.walletAddress}
                 onChange={handleChange}
                 autoComplete="number"
+                disabled={true}
               />
             </Grid>
             <Grid item xs={12} md={12}>

@@ -60,14 +60,21 @@ export default function Login() {
   const classes = useStyles();
   const [walletAddress, setWalletAddress] = useContext(walletContext);
   useEffect(() => {
-    console.log(getWalletAddress);
-    setWalletAddress(getWalletAddress);
+    const getWallet = async () => {
+      let address = await getWalletAddress();
+      setWalletAddress(address);
+    };
+    getWallet();
   }, []);
 
   const [loginData, setLoginData] = useState({
     walletAddress: "",
     password: "",
   });
+
+  useEffect(() => {
+    setLoginData({ ...loginData, walletAddress: walletAddress });
+  }, [walletAddress]);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -104,18 +111,20 @@ export default function Login() {
           Log In
         </Typography>
         <form method="POST" className={classes.form} noValidate>
+          {/* Wallet Address */}
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
             id="username"
-            label="Username"
+            label="Wallet Address"
             name="walletAddress"
             value={loginData.walletAddress}
             onChange={handleChange}
             autoComplete="username"
             autoFocus
+            disabled={true}
           />
           <TextField
             variant="outlined"
