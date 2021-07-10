@@ -19,6 +19,9 @@ import { walletContext } from "../../Context/WalletContext";
 // Functions import
 import { getWalletAddress } from "../../helpers/GetWalletAddress";
 import axios from "axios";
+import DashboardFarmer from "../dashboard/farmer/dashboard";
+import DashboardInvestor from "../dashboard/investor/dashboard";
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -59,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
   const [walletAddress, setWalletAddress] = useContext(walletContext);
+  const history = useHistory();
   useEffect(() => {
     console.log(getWalletAddress);
     setWalletAddress(getWalletAddress);
@@ -82,6 +86,11 @@ export default function Login() {
         console.log(
           `sessionStorage set with token value ${resData.other.token}`
         );
+        if (resData.other.userType === 1) {
+          history.push("/dashboard-farmer");
+        } else if (resData.other.userType === 2) {
+          history.push("/dashboard-investor");
+        }
       },
       (error) => {
         console.log(error);

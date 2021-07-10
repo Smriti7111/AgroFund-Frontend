@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import getWeb3 from "./getWeb3";
 
 import "./App.css";
+import DashboardFarmer from "./pages/dashboard/farmer/dashboard";
+import DashboardInvestor from "./pages/dashboard/investor/dashboard";
+import DashboardAdmin from "./pages/dashboard/admin/dashboard";
 import Login from "./pages/login";
 import SignUpFarmer from "./pages/signup/farmer";
 import SignUpInvestor from "./pages/signup/investor";
@@ -73,6 +76,21 @@ const App = () => {
               exact
               path="/signup-investor"
               component={SignUpInvestor}
+            ></Route>
+            <Route
+              exact
+              path="/dashboard-farmer"
+              component={DashboardFarmer}
+            ></Route>
+            <Route
+              exact
+              path="/dashboard-investor"
+              component={DashboardInvestor}
+            ></Route>
+            <Route
+              exact
+              path="/dashboard-admin"
+              component={DashboardAdmin}
             ></Route>
           </Switch>
           {/* <p>
