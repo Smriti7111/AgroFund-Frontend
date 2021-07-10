@@ -12,6 +12,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Alert from "@material-ui/lab/Alert";
 
 // Context Import
 import { walletContext } from "../../Context/WalletContext";
@@ -62,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
   const [walletAddress, setWalletAddress] = useContext(walletContext);
+  const [errorMessage, showErrorMessage] = useState(false);
   const history = useHistory();
   useEffect(() => {
     console.log(getWalletAddress);
@@ -94,6 +96,7 @@ export default function Login() {
       },
       (error) => {
         console.log(error);
+        showErrorMessage(true);
       }
     );
   };
@@ -109,7 +112,13 @@ export default function Login() {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+
       <div className={classes.paper}>
+        {errorMessage ? (
+          <Alert onClose={() => showErrorMessage(false)} severity="error">
+            Log in unsuccessful
+          </Alert>
+        ) : null}
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
