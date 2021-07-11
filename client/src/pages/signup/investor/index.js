@@ -88,7 +88,8 @@ export default function SignUpInvestor() {
       (response) => {
         console.log(response);
         history.push("/login", {
-          message: "You have successfully signed up as an investor",
+          message:
+            "You have successfully signed up as an investor. Please login to continue",
         });
       },
       (error) => {

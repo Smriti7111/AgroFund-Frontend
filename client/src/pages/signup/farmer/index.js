@@ -88,7 +88,8 @@ export default function SignUpFarmer() {
       (response) => {
         console.log(response);
         history.push("/login", {
-          message: "You have successfully signed up as farmer",
+          message:
+            "You have successfully signed up as farmer. Please login to continue",
         });
       },
       (error) => {
