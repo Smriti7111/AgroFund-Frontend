@@ -20,9 +20,7 @@ import { walletContext } from "../../Context/WalletContext";
 // Functions import
 import { getWalletAddress } from "../../helpers/GetWalletAddress";
 import axios from "axios";
-import DashboardFarmer from "../dashboard/farmer/dashboard";
-import DashboardInvestor from "../dashboard/investor/dashboard";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -64,6 +62,7 @@ export default function Login() {
   const classes = useStyles();
   const [walletAddress, setWalletAddress] = useContext(walletContext);
   const [errorMessage, showErrorMessage] = useState(false);
+  const [usertype, setUsertype] = useState("");
   const history = useHistory();
   useEffect(() => {
     console.log(getWalletAddress);
@@ -85,13 +84,14 @@ export default function Login() {
       (response) => {
         let resData = response.data;
         sessionStorage.setItem("token", resData.other.token);
+        setUsertype(resData.other.userType);
         console.log(
           `sessionStorage set with token value ${resData.other.token}`
         );
-        if (resData.other.userType === 1) {
-          history.push("/dashboard-farmer");
-        } else if (resData.other.userType === 2) {
-          history.push("/dashboard-investor");
+        if (usertype) {
+          history.push("/dashboard", { usertype });
+        } else {
+          return <Redirect to="/login" />;
         }
       },
       (error) => {

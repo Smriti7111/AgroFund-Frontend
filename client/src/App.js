@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 // import SimpleStorageContract from "./contracts/SimpleStorage.json";
 // import getWeb3 from "./getWeb3";
 
@@ -17,6 +22,22 @@ const App = () => {
   useEffect(() => {
     axios.get("http://localhost:8888/testAPI").then((res) => setData(res.data));
   }, []);
+
+  const PrivateRoute = ({ location, ...rest }) => {
+    let state = location.state;
+    if (state) {
+      switch (state.usertype) {
+        case 0:
+          return <DashboardAdmin />;
+        case 1:
+          return <DashboardFarmer />;
+        case 2:
+          return <DashboardInvestor />;
+      }
+    } else {
+      return <Redirect to="/login" />;
+    }
+  };
 
   // state = { web3: null, accounts: null, contract: null };
 
@@ -77,21 +98,7 @@ const App = () => {
               path="/signup-investor"
               component={SignUpInvestor}
             ></Route>
-            <Route
-              exact
-              path="/dashboard-farmer"
-              component={DashboardFarmer}
-            ></Route>
-            <Route
-              exact
-              path="/dashboard-investor"
-              component={DashboardInvestor}
-            ></Route>
-            <Route
-              exact
-              path="/dashboard-admin"
-              component={DashboardAdmin}
-            ></Route>
+            <PrivateRoute exact path="/dashboard"></PrivateRoute>
           </Switch>
           {/* <p>
             Try changing the value stored on <strong>line 42</strong> of App.js.
