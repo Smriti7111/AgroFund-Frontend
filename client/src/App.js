@@ -1,9 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import getWeb3 from "./getWeb3";
 
 import "./App.css";
 import { walletContext } from "./Context/WalletContext";
+
+import "./App.css";
+import DashboardFarmer from "./pages/dashboard/farmer/dashboard";
+import DashboardInvestor from "./pages/dashboard/investor/dashboard";
+import DashboardAdmin from "./pages/dashboard/admin/dashboard";
+
 import Login from "./pages/login";
 import SignUpFarmer from "./pages/signup/farmer";
 import SignUpInvestor from "./pages/signup/investor";
@@ -21,6 +26,24 @@ const App = () => {
     });
   }
 
+  const PrivateRoute = ({ location, ...rest }) => {
+    let state = location.state;
+    if (state) {
+      switch (state.usertype) {
+        case 0:
+          return <DashboardAdmin />;
+        case 1:
+          return <DashboardFarmer />;
+        case 2:
+          return <DashboardInvestor />;
+      }
+    } else {
+      return <Redirect to="/login" />;
+    }
+  };
+
+  // state = { web3: null, accounts: null, contract: null };
+
   return (
     <>
       <Router>
@@ -33,6 +56,7 @@ const App = () => {
               path="/signup-investor"
               component={SignUpInvestor}
             ></Route>
+            <PrivateRoute exact path="/dashboard"></PrivateRoute>
           </Switch>
 
           {/* <p>{!data ? "Loading..." : data}</p> */}

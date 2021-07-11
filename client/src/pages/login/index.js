@@ -12,6 +12,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Alert from "@material-ui/lab/Alert";
 
 // Context Import
 import { walletContext } from "../../Context/WalletContext";
@@ -19,6 +20,7 @@ import { walletContext } from "../../Context/WalletContext";
 // Functions import
 import { getWalletAddress } from "../../helpers/GetWalletAddress";
 import axios from "axios";
+import { Redirect, useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -59,6 +61,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
   const [walletAddress, setWalletAddress] = useContext(walletContext);
+  const [errorMessage, showErrorMessage] = useState(false);
+  const [usertype, setUsertype] = useState("");
+  const history = useHistory();
   useEffect(() => {
     const getWallet = async () => {
       let address = await getWalletAddress();
@@ -84,10 +89,21 @@ export default function Login() {
       data: loginData,
     }).then(
       (response) => {
-        console.log(response);
+        let resData = response.data;
+        sessionStorage.setItem("token", resData.other.token);
+        setUsertype(resData.other.userType);
+        console.log(
+          `sessionStorage set with token value ${resData.other.token}`
+        );
+        if (usertype) {
+          history.push("/dashboard", { usertype });
+        } else {
+          return <Redirect to="/login" />;
+        }
       },
       (error) => {
         console.log(error);
+        showErrorMessage(true);
       }
     );
   };
@@ -102,6 +118,11 @@ export default function Login() {
 
   return (
     <Container component="main" maxWidth="xs">
+      {errorMessage ? (
+        <Alert onClose={() => showErrorMessage(false)} severity="error">
+          Log in unsuccessful
+        </Alert>
+      ) : null}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -161,8 +182,8 @@ export default function Login() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
+              <Link href="/signup-investor" variant="body2">
+                {"Don't have an account? Join Now"}
               </Link>
             </Grid>
           </Grid>
