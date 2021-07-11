@@ -19,6 +19,7 @@ import { walletContext } from "../../../Context/WalletContext";
 // Functions import
 import { getWalletAddress } from "../../../helpers/GetWalletAddress";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -57,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUpInvestor() {
   const classes = useStyles();
+  const history = useHistory();
 
   const [walletAddress, setWalletAddress] = useContext(walletContext);
 
@@ -85,6 +87,9 @@ export default function SignUpInvestor() {
     }).then(
       (response) => {
         console.log(response);
+        history.push("/login", {
+          message: "You have successfully signed up as an investor",
+        });
       },
       (error) => {
         console.log(error);

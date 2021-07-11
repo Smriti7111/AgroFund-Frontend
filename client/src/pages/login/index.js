@@ -58,15 +58,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
+export default function Login({ location }) {
   const classes = useStyles();
   const [walletAddress, setWalletAddress] = useContext(walletContext);
   const [errorMessage, showErrorMessage] = useState(false);
+  const [successMessage, showSuccessMessage] = useState(false);
   const [usertype, setUsertype] = useState("");
   const history = useHistory();
+  let state = location.state;
   useEffect(() => {
     console.log(getWalletAddress);
     setWalletAddress(getWalletAddress);
+    if (state && state.message) {
+      showSuccessMessage(true);
+    } else {
+      showSuccessMessage(false);
+    }
   }, []);
 
   const [loginData, setLoginData] = useState({
@@ -114,6 +121,11 @@ export default function Login() {
       {errorMessage ? (
         <Alert onClose={() => showErrorMessage(false)} severity="error">
           Log in unsuccessful
+        </Alert>
+      ) : null}
+      {successMessage ? (
+        <Alert onClose={() => showSuccessMessage(false)} severity="success">
+          {state.message}
         </Alert>
       ) : null}
       <CssBaseline />
