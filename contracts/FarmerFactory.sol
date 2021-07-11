@@ -3,6 +3,7 @@ pragma experimental ABIEncoderV2;
 contract FarmerFactory {
     struct Farmer {
         string id;
+        address walletAddress;
         bool hasProject;
         bool isVerified;
     }
@@ -13,7 +14,7 @@ contract FarmerFactory {
     mapping(string=> uint) public farmerIndex;
 
     function _createFarmer(string memory _id) public {
-        uint index = farmers.push(Farmer(_id, false, false)) - 1;
+        uint index = farmers.push(Farmer(_id, msg.sender,false, false)) - 1;
         farmerIndex[_id] = index; 
     }
 

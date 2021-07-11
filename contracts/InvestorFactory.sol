@@ -1,22 +1,31 @@
 pragma solidity ^0.5.0;
+pragma experimental ABIEncoderV2;
 
 contract InvestorFactory {
     struct Investor {
-        uint id;
+        string id;
+        address walletAddress;
+      
         bool isVerified;
     }
 
     Investor[] public investors;
     
-    mapping(address => uint) public investorIndex;
+    mapping(string => uint) public investorIndex;
 
-    function createInvestor(uint _id, bool _isVerified) public {
-        uint index = investors.push(Investor(_id, _isVerified)) - 1;
-        investorIndex[msg.sender] = index; 
+    function _createInvestor(string memory _id) public {
+        uint index = investors.push(Investor(_id, msg.sender,false)) - 1;
+        investorIndex[_id] = index; 
     }
 
-    function verifyInvestor(bool status,address investor) public {
-        uint index = investorIndex[investor];
-        investors[index].isVerified = status;
+    function _verifyInvestor(string memory _id) public {
+        uint index = investorIndex[_id];
+        investors[index].isVerified = true;
+    }
+
+    
+    function _getInvestor(string memory _investorId) public view returns(Investor memory){
+        uint index=investorIndex[_investorId];
+        return investors[index];
     }
 }
