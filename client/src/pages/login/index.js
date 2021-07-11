@@ -111,14 +111,13 @@ export default function Login() {
 
   return (
     <Container component="main" maxWidth="xs">
+      {errorMessage ? (
+        <Alert onClose={() => showErrorMessage(false)} severity="error">
+          Log in unsuccessful
+        </Alert>
+      ) : null}
       <CssBaseline />
-
       <div className={classes.paper}>
-        {errorMessage ? (
-          <Alert onClose={() => showErrorMessage(false)} severity="error">
-            Log in unsuccessful
-          </Alert>
-        ) : null}
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
