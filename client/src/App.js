@@ -26,7 +26,7 @@ const App = () => {
   const PrivateRoute = ({ location, ...rest }) => {
     let state = location.state;
     if (state) {
-      switch (state.usertype) {
+      switch (state.userType) {
         case 0:
           return <DashboardAdmin />;
         case 1:

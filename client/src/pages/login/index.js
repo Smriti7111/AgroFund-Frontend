@@ -63,7 +63,6 @@ export default function Login({ location }) {
   const [walletAddress, setWalletAddress] = useContext(walletContext);
   const [errorMessage, showErrorMessage] = useState(false);
   const [successMessage, showSuccessMessage] = useState(false);
-  const [usertype, setUsertype] = useState("");
   const history = useHistory();
   let state = location.state;
   useEffect(() => {
@@ -81,31 +80,32 @@ export default function Login({ location }) {
     password: "",
   });
 
+  const sendLoginRequest = async () => {
+    try {
+      const res = await axios({
+        method: "POST",
+        url: "/login",
+        data: loginData,
+      });
+      let resData = res.data;
+      let token = resData.other.token;
+      let userType = resData.other.userType;
+      sessionStorage.setItem("token", token);
+      console.log(`sessionStorage set with token value ${token}`);
+      if (token && userType) {
+        history.push("/dashboard", { userType });
+      } else {
+        return <Redirect to="/login" />;
+      }
+    } catch (err) {
+      console.log(err);
+      showErrorMessage(true);
+    }
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
-    axios({
-      method: "POST",
-      url: "/login",
-      data: loginData,
-    }).then(
-      (response) => {
-        let resData = response.data;
-        sessionStorage.setItem("token", resData.other.token);
-        setUsertype(resData.other.userType);
-        console.log(
-          `sessionStorage set with token value ${resData.other.token}`
-        );
-        if (usertype) {
-          history.push("/dashboard", { usertype });
-        } else {
-          return <Redirect to="/login" />;
-        }
-      },
-      (error) => {
-        console.log(error);
-        showErrorMessage(true);
-      }
-    );
+    sendLoginRequest();
   };
 
   const handleChange = (e) => {
