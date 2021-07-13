@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import Alert from "@material-ui/lab/Alert";
 import Navbar from "../../../components/Navbar";
+import MyAlert from "../../../components/MyAlert";
 
-const DashboardAdmin = () => {
-  const [loggedIn, setLoggedIn] = useState(true);
-
+const DashboardAdmin = (props) => {
+  const { showAlert } = props;
+  const [alert, setAlert] = useState(showAlert);
   return (
     <>
-      {loggedIn ? (
-        <Alert onClose={() => setLoggedIn(false)} severity="success">
-          Successfully logged in as an investor!
-        </Alert>
+      {alert ? (
+        <MyAlert
+          setAlert={setAlert}
+          severity="success"
+          message="Successfully logged in as an admin!"
+        />
       ) : null}
       <Navbar />
       <h1>Logged in as an admin</h1>

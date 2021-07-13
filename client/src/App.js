@@ -28,11 +28,11 @@ const App = () => {
     if (state) {
       switch (state.userType) {
         case 0:
-          return <DashboardAdmin />;
+          return <DashboardAdmin showAlert={state.showAlert} />;
         case 1:
-          return <DashboardFarmer />;
+          return <DashboardFarmer showAlert={state.showAlert} />;
         case 2:
-          return <DashboardInvestor />;
+          return <DashboardInvestor showAlert={state.showAlert} />;
       }
     } else {
       return <Redirect to="/login" />;

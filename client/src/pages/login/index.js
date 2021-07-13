@@ -93,7 +93,7 @@ export default function Login({ location }) {
       sessionStorage.setItem("token", token);
       console.log(`sessionStorage set with token value ${token}`);
       if (token && userType) {
-        history.push("/dashboard", { userType });
+        history.push("/dashboard", { userType, showAlert: "true" });
       } else {
         return <Redirect to="/login" />;
       }
