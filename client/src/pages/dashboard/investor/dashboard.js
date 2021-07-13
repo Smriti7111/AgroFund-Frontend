@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Alert from "@material-ui/lab/Alert";
+import Navbar from "../../../components/Navbar";
 
 const DashboardInvestor = () => {
   const [loggedIn, setLoggedIn] = useState(true);
@@ -10,6 +11,7 @@ const DashboardInvestor = () => {
           Successfully logged in as an investor!
         </Alert>
       ) : null}
+      <Navbar />
       <h1>Logged in as an investor</h1>
     </>
   );
