@@ -21,6 +21,7 @@ import { walletContext } from "../../Context/WalletContext";
 import { getWalletAddress } from "../../helpers/GetWalletAddress";
 import axios from "axios";
 import { Redirect, useHistory } from "react-router-dom";
+import MyAlert from "../../components/MyAlert";
 
 function Copyright() {
   return (
@@ -119,14 +120,18 @@ export default function Login({ location }) {
   return (
     <Container component="main" maxWidth="xs">
       {errorMessage ? (
-        <Alert onClose={() => showErrorMessage(false)} severity="error">
-          Log in unsuccessful
-        </Alert>
+        <MyAlert
+          setAlert={showErrorMessage}
+          severity="error"
+          message="Login unsuccessful"
+        />
       ) : null}
       {successMessage ? (
-        <Alert onClose={() => showSuccessMessage(false)} severity="success">
-          {state.message}
-        </Alert>
+        <MyAlert
+          setAlert={showSuccessMessage}
+          severity="success"
+          message={state.message}
+        />
       ) : null}
       <CssBaseline />
       <div className={classes.paper}>

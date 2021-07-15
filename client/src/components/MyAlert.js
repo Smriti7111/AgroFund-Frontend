@@ -5,6 +5,7 @@ const MyAlert = (props) => {
   const { severity, message, setAlert } = props;
   useEffect(() => {
     const timeout = setTimeout(() => {
+      console.log("hi there");
       setAlert(false);
       // Disable your alert after 5 seconds
     }, 5000);
