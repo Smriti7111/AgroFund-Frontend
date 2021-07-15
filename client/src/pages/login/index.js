@@ -21,6 +21,7 @@ import { walletContext } from "../../Context/WalletContext";
 import { getWalletAddress } from "../../helpers/GetWalletAddress";
 import axios from "axios";
 import { Redirect, useHistory } from "react-router-dom";
+import MyAlert from "../../components/MyAlert";
 
 function Copyright() {
   return (
@@ -58,18 +59,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
+export default function Login({ location }) {
   const classes = useStyles();
   const [walletAddress, setWalletAddress] = useContext(walletContext);
   const [errorMessage, showErrorMessage] = useState(false);
-  const [usertype, setUsertype] = useState("");
+  const [successMessage, showSuccessMessage] = useState(false);
   const history = useHistory();
+  let state = location.state;
   useEffect(() => {
     const getWallet = async () => {
       let address = await getWalletAddress();
       setWalletAddress(address);
     };
     getWallet();
+
+    if (state && state.message) {
+      showSuccessMessage(true);
+    } else {
+      showSuccessMessage(false);
+    }
   }, []);
 
   const [loginData, setLoginData] = useState({
@@ -81,31 +89,32 @@ export default function Login() {
     setLoginData({ ...loginData, walletAddress: walletAddress });
   }, [walletAddress]);
 
+  const sendLoginRequest = async () => {
+    try {
+      const res = await axios({
+        method: "POST",
+        url: "/login",
+        data: loginData,
+      });
+      let resData = res.data;
+      let token = resData.other.token;
+      let userType = resData.other.userType;
+      sessionStorage.setItem("token", token);
+      console.log(`sessionStorage set with token value ${token}`);
+      if (token && userType) {
+        history.push("/dashboard", { userType, showAlert: "true" });
+      } else {
+        return <Redirect to="/login" />;
+      }
+    } catch (err) {
+      console.log(err);
+      showErrorMessage(true);
+    }
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
-    axios({
-      method: "POST",
-      url: "/login",
-      data: loginData,
-    }).then(
-      (response) => {
-        let resData = response.data;
-        sessionStorage.setItem("token", resData.other.token);
-        setUsertype(resData.other.userType);
-        console.log(
-          `sessionStorage set with token value ${resData.other.token}`
-        );
-        if (usertype) {
-          history.push("/dashboard", { usertype });
-        } else {
-          return <Redirect to="/login" />;
-        }
-      },
-      (error) => {
-        console.log(error);
-        showErrorMessage(true);
-      }
-    );
+    sendLoginRequest();
   };
 
   const handleChange = (e) => {
@@ -119,9 +128,18 @@ export default function Login() {
   return (
     <Container component="main" maxWidth="xs">
       {errorMessage ? (
-        <Alert onClose={() => showErrorMessage(false)} severity="error">
-          Log in unsuccessful
-        </Alert>
+        <MyAlert
+          setAlert={showErrorMessage}
+          severity="error"
+          message="Login unsuccessful"
+        />
+      ) : null}
+      {successMessage ? (
+        <MyAlert
+          setAlert={showSuccessMessage}
+          severity="success"
+          message={state.message}
+        />
       ) : null}
       <CssBaseline />
       <div className={classes.paper}>

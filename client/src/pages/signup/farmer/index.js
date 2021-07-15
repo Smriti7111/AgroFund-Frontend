@@ -19,6 +19,7 @@ import { walletContext } from "../../../Context/WalletContext";
 // Functions import
 import { getWalletAddress } from "../../../helpers/GetWalletAddress";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -57,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUpFarmer() {
   const classes = useStyles();
+  const history = useHistory();
 
   const [walletAddress, setWalletAddress] = useContext(walletContext);
 
@@ -94,6 +96,10 @@ export default function SignUpFarmer() {
     }).then(
       (response) => {
         console.log(response);
+        history.push("/login", {
+          message:
+            "You have successfully signed up as farmer. Please login to continue",
+        });
       },
       (error) => {
         console.log(error);
