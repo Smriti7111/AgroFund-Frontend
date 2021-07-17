@@ -18,6 +18,7 @@ import SignUpInvestor from "./pages/signup/investor";
 const axios = require("axios");
 
 const App = () => {
+  const [data, setData] = useState(null);
   const [farmerData, setFarmerData] = useState([]);
   const [investorData, setInvestorData] = useState([]);
 
