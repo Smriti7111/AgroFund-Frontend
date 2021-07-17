@@ -18,10 +18,39 @@ import SignUpInvestor from "./pages/signup/investor";
 const axios = require("axios");
 
 const App = () => {
-  const [data, setData] = useState(null);
+  const [farmerData, setFarmerData] = useState([]);
+  const [investorData, setInvestorData] = useState([]);
+
   useEffect(() => {
-    axios.get("http://localhost:8888/testAPI").then((res) => setData(res.data));
+    // getAllFarmers();
+    // getAllInvestors();
   }, []);
+
+  // const getAllFarmers = async () => {
+  //   try {
+  //     const res = await axios({
+  //       method: "GET",
+  //       url: "/api/farmer",
+  //     });
+  //     let resData = res.data.data;
+  //     setFarmerData(resData);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // const getAllInvestors = async () => {
+  //   try {
+  //     const res = await axios({
+  //       method: "GET",
+  //       url: "/api/investor",
+  //     });
+  //     let resData = res.data.data;
+  //     setInvestorData(resData);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const PrivateRoute = ({ location, ...rest }) => {
     let state = location.state;

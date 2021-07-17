@@ -12,7 +12,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Alert from "@material-ui/lab/Alert";
+import { useCookies } from "react-cookie";
 
 // Context Import
 import { walletContext } from "../../Context/WalletContext";
@@ -62,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Login({ location }) {
   const classes = useStyles();
   const [walletAddress, setWalletAddress] = useContext(walletContext);
+  const [cookies, setCookie] = useCookies(["user"]);
   const [errorMessage, showErrorMessage] = useState(false);
   const [successMessage, showSuccessMessage] = useState(false);
   const history = useHistory();
@@ -92,6 +93,8 @@ export default function Login({ location }) {
       let token = resData.other.token;
       let userType = resData.other.userType;
       sessionStorage.setItem("token", token);
+      setCookie("User", resData.data, { path: "/" });
+      console.log(resData);
       console.log(`sessionStorage set with token value ${token}`);
       if (token && userType) {
         history.push("/dashboard", { userType, showAlert: "true" });

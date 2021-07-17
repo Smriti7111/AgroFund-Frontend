@@ -4,11 +4,14 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { WalletProvider } from "./Context/WalletContext";
+import { CookiesProvider } from "react-cookie";
 
 ReactDOM.render(
-  <WalletProvider>
-    <App />
-  </WalletProvider>,
+  <CookiesProvider>
+    <WalletProvider>
+      <App />
+    </WalletProvider>
+  </CookiesProvider>,
   document.getElementById("root")
 );
 
