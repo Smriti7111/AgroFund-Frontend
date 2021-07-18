@@ -65,12 +65,13 @@ export default function Login({ location }) {
   const [cookies, setCookie] = useCookies(["user"]);
   const [errorMessage, showErrorMessage] = useState(false);
   const [successMessage, showSuccessMessage] = useState(false);
+  const [message, setMessage] = useState("");
   const history = useHistory();
-  let state = location.state;
   useEffect(() => {
     console.log(getWalletAddress);
     setWalletAddress(getWalletAddress);
-    if (state && state.message) {
+    if (location && location.state && location.state.message) {
+      setMessage(location.state.message);
       showSuccessMessage(true);
     } else {
       showSuccessMessage(false);
@@ -91,12 +92,11 @@ export default function Login({ location }) {
       });
       let resData = res.data;
       let token = resData.other.token;
-      let userType = resData.other.userType;
       sessionStorage.setItem("token", token);
       setCookie("User", resData, { path: "/" });
       console.log(`sessionStorage set with token value ${token}`);
-      if (token && userType) {
-        history.push("/dashboard", { userType, showAlert: "true" });
+      if (token) {
+        history.push("/dashboard", { showAlert: "true" });
       } else {
         return <Redirect to="/login" />;
       }
@@ -132,7 +132,7 @@ export default function Login({ location }) {
         <MyAlert
           setAlert={showSuccessMessage}
           severity="success"
-          message={state.message}
+          message={message}
         />
       ) : null}
       <CssBaseline />

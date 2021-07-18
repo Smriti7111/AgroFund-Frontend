@@ -60,22 +60,22 @@ const App = () => {
     let session = sessionStorage.getItem("token");
     let pathname = location.pathname;
     let state = location.state;
+    const showAlert = state ? state.showAlert : "false";
+
     if (session == null) {
-      return <Redirect to="/login" />;
+      return <Login />;
     }
     if (pathname == "/createProject" && other.userType == 1) {
       return <CreateProject />;
     }
-    if (pathname == "/dashboard") {
-      if (state) {
-        switch (state.userType) {
-          case 0:
-            return <DashboardAdmin showAlert={state.showAlert} />;
-          case 1:
-            return <DashboardFarmer showAlert={state.showAlert} />;
-          case 2:
-            return <DashboardInvestor showAlert={state.showAlert} />;
-        }
+    if (pathname == "/dashboard" || pathname == "/login") {
+      switch (other.userType) {
+        case 0:
+          return <DashboardAdmin showAlert={showAlert} />;
+        case 1:
+          return <DashboardFarmer showAlert={showAlert} />;
+        case 2:
+          return <DashboardInvestor showAlert={showAlert} />;
       }
     }
   };
@@ -132,15 +132,15 @@ const App = () => {
       <Router>
         <div className="App">
           <Switch>
-            <Route exact path="/login" component={Login}></Route>
+            <PrivateRoute exact path="/login" />
             <Route exact path="/signup-farmer" component={SignUpFarmer}></Route>
             <Route
               exact
               path="/signup-investor"
               component={SignUpInvestor}
             ></Route>
-            <PrivateRoute exact path="/createProject"></PrivateRoute>
-            <PrivateRoute exact path="/dashboard"></PrivateRoute>
+            <PrivateRoute exact path="/createProject" />
+            <PrivateRoute exact path="/dashboard" />
             <Route path="*" exact component={My404Component} />
           </Switch>
           {/* <p>
