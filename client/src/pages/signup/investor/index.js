@@ -20,6 +20,7 @@ import { walletContext } from "../../../Context/WalletContext";
 import { getWalletAddress } from "../../../helpers/GetWalletAddress";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import MyAlert from "../../../components/MyAlert";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -72,6 +73,8 @@ export default function SignUpInvestor() {
     confirmPassword: "",
     check: false,
   });
+  const [alert, showAlert] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     console.log(getWalletAddress);
@@ -99,9 +102,19 @@ export default function SignUpInvestor() {
 
   const validateForm = () => {
     const { password, confirmPassword, check } = formData;
-    if (password === confirmPassword && check) {
-      return true;
+    if (password !== confirmPassword) {
+      showAlert(true);
+      setMessage("Password and Confirm Password does not match");
+      return false;
     }
+    if (!check) {
+      showAlert(true);
+      setMessage(
+        "Please indicate that you agree to the Terms and Conditions and Privacy Policy"
+      );
+      return false;
+    }
+    return true;
   };
 
   const handleSubmit = (e) => {
@@ -131,6 +144,9 @@ export default function SignUpInvestor() {
 
   return (
     <Container component="main" maxWidth="sm">
+      {alert ? (
+        <MyAlert setAlert={showAlert} severity="error" message={message} />
+      ) : null}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -241,7 +257,7 @@ export default function SignUpInvestor() {
                 value={formData.check}
                 onChange={handleChange}
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I agree to the terms and conditions"
+                label="I agree to the terms and conditions and privacy policy"
               />
             </Grid>
           </Grid>

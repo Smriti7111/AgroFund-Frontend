@@ -60,6 +60,8 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUpFarmer() {
   const classes = useStyles();
   const history = useHistory();
+  const [alert, showAlert] = useState(false);
+  const [message, setMessage] = useState("");
 
   const [walletAddress, setWalletAddress] = useContext(walletContext);
 
@@ -100,9 +102,19 @@ export default function SignUpFarmer() {
 
   const validateForm = () => {
     const { password, confirmPassword, check } = formData;
-    if (password === confirmPassword && check) {
-      return true;
+    if (password !== confirmPassword) {
+      showAlert(true);
+      setMessage("Password and Confirm Password does not match");
+      return false;
     }
+    if (!check) {
+      showAlert(true);
+      setMessage(
+        "Please indicate that you agree to the Terms and Conditions and Privacy Policy"
+      );
+      return false;
+    }
+    return true;
   };
 
   const handleSubmit = (e) => {
@@ -132,6 +144,9 @@ export default function SignUpFarmer() {
 
   return (
     <Container component="main" maxWidth="sm">
+      {alert ? (
+        <MyAlert setAlert={showAlert} severity="error" message={message} />
+      ) : null}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -242,7 +257,7 @@ export default function SignUpFarmer() {
                 value={formData.check}
                 onChange={handleChange}
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I agree to the terms and conditions"
+                label="I agree to the terms and conditions and privacy policy"
               />
             </Grid>
           </Grid>
