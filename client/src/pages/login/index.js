@@ -143,7 +143,7 @@ export default function Login({ location }) {
         <Typography component="h1" variant="h5">
           Log In
         </Typography>
-        <form method="POST" className={classes.form} noValidate>
+        <form method="POST" onSubmit={handleLogin} className={classes.form}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -180,7 +180,6 @@ export default function Login({ location }) {
             fullWidth
             variant="contained"
             color="primary"
-            onClick={handleLogin}
             className={classes.submit}
           >
             Log In
