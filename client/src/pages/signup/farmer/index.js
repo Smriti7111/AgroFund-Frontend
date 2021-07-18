@@ -78,8 +78,7 @@ export default function SignUpFarmer() {
     setWalletAddress(getWalletAddress);
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const createFarmer = () => {
     axios({
       method: "POST",
       url: "/api/farmer",
@@ -96,6 +95,11 @@ export default function SignUpFarmer() {
         console.log(error);
       }
     );
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createFarmer();
   };
 
   const handleChange = (e) => {

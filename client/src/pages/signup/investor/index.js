@@ -78,8 +78,7 @@ export default function SignUpInvestor() {
     setWalletAddress(getWalletAddress);
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const createInvestor = () => {
     axios({
       method: "POST",
       url: "/api/investor",
@@ -96,6 +95,11 @@ export default function SignUpInvestor() {
         console.log(error);
       }
     );
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createInvestor();
   };
 
   const handleChange = (e) => {
