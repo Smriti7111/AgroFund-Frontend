@@ -20,6 +20,7 @@ import { walletContext } from "../../../Context/WalletContext";
 import { getWalletAddress } from "../../../helpers/GetWalletAddress";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import MyAlert from "../../../components/MyAlert";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -97,9 +98,21 @@ export default function SignUpFarmer() {
     );
   };
 
+  const validateForm = () => {
+    const { password, confirmPassword, check } = formData;
+    if (password === confirmPassword && check) {
+      return true;
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    createFarmer();
+    const validate = validateForm();
+    if (validate) {
+      createFarmer();
+    } else {
+      console.log("Not validated");
+    }
   };
 
   const handleChange = (e) => {

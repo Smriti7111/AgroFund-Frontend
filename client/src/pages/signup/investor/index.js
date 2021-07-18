@@ -97,9 +97,21 @@ export default function SignUpInvestor() {
     );
   };
 
+  const validateForm = () => {
+    const { password, confirmPassword, check } = formData;
+    if (password === confirmPassword && check) {
+      return true;
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    createInvestor();
+    const validate = validateForm();
+    if (validate) {
+      createInvestor();
+    } else {
+      console.log("Not validated");
+    }
   };
 
   const handleChange = (e) => {
