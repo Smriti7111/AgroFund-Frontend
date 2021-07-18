@@ -17,6 +17,7 @@ import SignUpFarmer from "./pages/signup/farmer";
 import SignUpInvestor from "./pages/signup/investor";
 import CreateProject from "./components/CreateProject";
 import { useCookies } from "react-cookie";
+import My404Component from "./components/My404Component";
 const axios = require("axios");
 
 const App = () => {
@@ -140,6 +141,7 @@ const App = () => {
             ></Route>
             <PrivateRoute exact path="/createProject"></PrivateRoute>
             <PrivateRoute exact path="/dashboard"></PrivateRoute>
+            <Route path="*" exact component={My404Component} />
           </Switch>
           {/* <p>
             Try changing the value stored on <strong>line 42</strong> of App.js.
