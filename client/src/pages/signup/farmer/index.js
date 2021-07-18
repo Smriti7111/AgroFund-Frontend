@@ -127,7 +127,7 @@ export default function SignUpFarmer() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form method="POST" className={classes.form} noValidate>
+        <form method="POST" onSubmit={handleSubmit} className={classes.form}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12}>
               <TextField
@@ -235,7 +235,6 @@ export default function SignUpFarmer() {
           </Grid>
           <Button
             type="submit"
-            onClick={handleSubmit}
             fullWidth
             variant="contained"
             color="primary"
