@@ -8,6 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import CreateProject from "./CreateProject";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,12 +33,20 @@ const Navbar = () => {
     history.push("/login");
   };
 
+  const createProject = () => {
+    history.push("/createProject");
+  };
+
   const showButton = () => {
     let user = cookies.User;
     if (user.hasProject) {
       return <Button color="inherit">View my Project</Button>;
     } else if (!user.hasProject && user.isVerified) {
-      return <Button color="inherit">Create a Project</Button>;
+      return (
+        <Button onClick={createProject} color="inherit">
+          Create a Project
+        </Button>
+      );
     } else {
       return <Button color="inherit">Verify</Button>;
     }

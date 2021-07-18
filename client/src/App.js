@@ -15,6 +15,7 @@ import DashboardAdmin from "./pages/dashboard/admin/dashboard";
 import Login from "./pages/login";
 import SignUpFarmer from "./pages/signup/farmer";
 import SignUpInvestor from "./pages/signup/investor";
+import CreateProject from "./components/CreateProject";
 const axios = require("axios");
 
 const App = () => {
@@ -127,6 +128,11 @@ const App = () => {
               exact
               path="/signup-investor"
               component={SignUpInvestor}
+            ></Route>
+            <Route
+              exact
+              path="/createProject"
+              component={CreateProject}
             ></Route>
             <PrivateRoute exact path="/dashboard"></PrivateRoute>
           </Switch>
