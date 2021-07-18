@@ -138,7 +138,7 @@ export default function SignUpFarmer() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Sign up as a Farmer
         </Typography>
         <form method="POST" onSubmit={handleSubmit} className={classes.form}>
           <Grid container spacing={2}>

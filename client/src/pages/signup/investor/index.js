@@ -137,7 +137,7 @@ export default function SignUpInvestor() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Sign up as an Investor
         </Typography>
         <form method="POST" onSubmit={handleSubmit} className={classes.form}>
           <Grid container spacing={2}>
