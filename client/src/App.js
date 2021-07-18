@@ -19,7 +19,6 @@ import CreateProject from "./components/CreateProject";
 const axios = require("axios");
 
 const App = () => {
-  const [data, setData] = useState(null);
   const [farmerData, setFarmerData] = useState([]);
   const [investorData, setInvestorData] = useState([]);
 
@@ -140,7 +139,6 @@ const App = () => {
             Try changing the value stored on <strong>line 42</strong> of App.js.
           </p>
           <div>The stored value is: {this.state.storageValue}</div> */}
-          <p>{!data ? "Loading..." : data}</p>
         </div>
       </Router>
     </>
