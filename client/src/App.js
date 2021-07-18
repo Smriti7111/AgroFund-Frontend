@@ -16,12 +16,13 @@ import Login from "./pages/login";
 import SignUpFarmer from "./pages/signup/farmer";
 import SignUpInvestor from "./pages/signup/investor";
 import CreateProject from "./components/CreateProject";
+import { useCookies } from "react-cookie";
 const axios = require("axios");
 
 const App = () => {
   const [farmerData, setFarmerData] = useState([]);
   const [investorData, setInvestorData] = useState([]);
-
+  const [cookies, setCookie] = useCookies(["user"]);
   useEffect(() => {
     // getAllFarmers();
     // getAllInvestors();
@@ -54,18 +55,27 @@ const App = () => {
   // };
 
   const PrivateRoute = ({ location, ...rest }) => {
+    let other = cookies.User.other;
+    let session = sessionStorage.getItem("token");
+    let pathname = location.pathname;
     let state = location.state;
-    if (state) {
-      switch (state.userType) {
-        case 0:
-          return <DashboardAdmin showAlert={state.showAlert} />;
-        case 1:
-          return <DashboardFarmer showAlert={state.showAlert} />;
-        case 2:
-          return <DashboardInvestor showAlert={state.showAlert} />;
-      }
-    } else {
+    if (session == null) {
       return <Redirect to="/login" />;
+    }
+    if (pathname == "/createProject" && other.userType == 1) {
+      return <CreateProject />;
+    }
+    if (pathname == "/dashboard") {
+      if (state) {
+        switch (state.userType) {
+          case 0:
+            return <DashboardAdmin showAlert={state.showAlert} />;
+          case 1:
+            return <DashboardFarmer showAlert={state.showAlert} />;
+          case 2:
+            return <DashboardInvestor showAlert={state.showAlert} />;
+        }
+      }
     }
   };
 
@@ -128,11 +138,7 @@ const App = () => {
               path="/signup-investor"
               component={SignUpInvestor}
             ></Route>
-            <Route
-              exact
-              path="/createProject"
-              component={CreateProject}
-            ></Route>
+            <PrivateRoute exact path="/createProject"></PrivateRoute>
             <PrivateRoute exact path="/dashboard"></PrivateRoute>
           </Switch>
           {/* <p>

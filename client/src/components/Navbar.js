@@ -38,7 +38,7 @@ const Navbar = () => {
   };
 
   const showButton = () => {
-    let user = cookies.User;
+    let user = cookies.User.data;
     if (user.hasProject) {
       return <Button color="inherit">View my Project</Button>;
     } else if (!user.hasProject && user.isVerified) {
