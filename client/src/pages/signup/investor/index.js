@@ -20,6 +20,7 @@ import { walletContext } from "../../../Context/WalletContext";
 import { getWalletAddress } from "../../../helpers/GetWalletAddress";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import MyAlert from "../../../components/MyAlert";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -72,6 +73,8 @@ export default function SignUpInvestor() {
     confirmPassword: "",
     check: false,
   });
+  const [alert, showAlert] = useState(false);
+  const [message, setMessage] = useState("");
 
   // Get Wallet Address
   useEffect(() => {
@@ -82,6 +85,7 @@ export default function SignUpInvestor() {
     getWallet();
   }, []);
 
+<<<<<<< HEAD
   // Set Wallet address to input field
   useEffect(() => {
     setFormData({ ...formData, walletAddress: walletAddress });
@@ -89,6 +93,9 @@ export default function SignUpInvestor() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+=======
+  const createInvestor = () => {
+>>>>>>> 0f3a730095d33854c52722e9ef925be2e130c949
     axios({
       method: "POST",
       url: "/api/investor",
@@ -105,6 +112,33 @@ export default function SignUpInvestor() {
         console.log(error);
       }
     );
+  };
+
+  const validateForm = () => {
+    const { password, confirmPassword, check } = formData;
+    if (password !== confirmPassword) {
+      showAlert(true);
+      setMessage("Password and Confirm Password does not match");
+      return false;
+    }
+    if (!check) {
+      showAlert(true);
+      setMessage(
+        "Please indicate that you agree to the Terms and Conditions and Privacy Policy"
+      );
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validate = validateForm();
+    if (validate) {
+      createInvestor();
+    } else {
+      console.log("Not validated");
+    }
   };
 
   const handleChange = (e) => {
@@ -124,15 +158,18 @@ export default function SignUpInvestor() {
 
   return (
     <Container component="main" maxWidth="sm">
+      {alert ? (
+        <MyAlert setAlert={showAlert} severity="error" message={message} />
+      ) : null}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Sign up as an Investor
         </Typography>
-        <form method="POST" className={classes.form} noValidate>
+        <form method="POST" onSubmit={handleSubmit} className={classes.form}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12}>
               <TextField
@@ -235,13 +272,12 @@ export default function SignUpInvestor() {
                 value={formData.check}
                 onChange={handleChange}
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I agree to the terms and conditions"
+                label="I agree to the terms and conditions and privacy policy"
               />
             </Grid>
           </Grid>
           <Button
             type="submit"
-            onClick={handleSubmit}
             fullWidth
             variant="contained"
             color="primary"

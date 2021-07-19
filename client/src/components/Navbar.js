@@ -7,6 +7,8 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useHistory } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import CreateProject from "./CreateProject";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,11 +25,31 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = () => {
   const classes = useStyles();
   const history = useHistory();
+  const [cookies, setCookie] = useCookies(["user"]);
 
   const handleLogout = () => {
     sessionStorage.setItem("token", "");
     sessionStorage.clear();
     history.push("/login");
+  };
+
+  const createProject = () => {
+    history.push("/createProject");
+  };
+
+  const showButton = () => {
+    let user = cookies.User.data;
+    if (user.hasProject) {
+      return <Button color="inherit">View my Project</Button>;
+    } else if (!user.hasProject && user.isVerified) {
+      return (
+        <Button onClick={createProject} color="inherit">
+          Create a Project
+        </Button>
+      );
+    } else {
+      return <Button color="inherit">Verify</Button>;
+    }
   };
 
   return (
@@ -45,6 +67,7 @@ const Navbar = () => {
           <Typography variant="h6" className={classes.title}>
             Agro Fund
           </Typography>
+          {showButton()}
           <Button onClick={handleLogout} color="inherit">
             Logout
           </Button>

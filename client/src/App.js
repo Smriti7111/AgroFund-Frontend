@@ -17,6 +17,7 @@ import DashboardAdmin from "./pages/dashboard/admin/dashboard";
 import Login from "./pages/login";
 import SignUpFarmer from "./pages/signup/farmer";
 import SignUpInvestor from "./pages/signup/investor";
+<<<<<<< HEAD
 
 const App = () => {
   const [data, setData] = useState(null);
@@ -30,20 +31,70 @@ const App = () => {
       console.log("Account Changed");
     });
   }
+=======
+import CreateProject from "./components/CreateProject";
+import { useCookies } from "react-cookie";
+import My404Component from "./components/My404Component";
+const axios = require("axios");
+
+const App = () => {
+  const [farmerData, setFarmerData] = useState([]);
+  const [investorData, setInvestorData] = useState([]);
+  const [cookies, setCookie] = useCookies(["user"]);
+  useEffect(() => {
+    // getAllFarmers();
+    // getAllInvestors();
+  }, []);
+>>>>>>> 0f3a730095d33854c52722e9ef925be2e130c949
+
+  // const getAllFarmers = async () => {
+  //   try {
+  //     const res = await axios({
+  //       method: "GET",
+  //       url: "/api/farmer",
+  //     });
+  //     let resData = res.data.data;
+  //     setFarmerData(resData);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // const getAllInvestors = async () => {
+  //   try {
+  //     const res = await axios({
+  //       method: "GET",
+  //       url: "/api/investor",
+  //     });
+  //     let resData = res.data.data;
+  //     setInvestorData(resData);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const PrivateRoute = ({ location, ...rest }) => {
+    let other = cookies.User.other;
+    let session = sessionStorage.getItem("token");
+    let pathname = location.pathname;
     let state = location.state;
-    if (state) {
-      switch (state.userType) {
+    const showAlert = state ? state.showAlert : "false";
+
+    if (session == null) {
+      return <Login />;
+    }
+    if (pathname == "/createProject" && other.userType == 1) {
+      return <CreateProject />;
+    }
+    if (pathname == "/dashboard" || pathname == "/login") {
+      switch (other.userType) {
         case 0:
-          return <DashboardAdmin showAlert={state.showAlert} />;
+          return <DashboardAdmin showAlert={showAlert} />;
         case 1:
-          return <DashboardFarmer showAlert={state.showAlert} />;
+          return <DashboardFarmer showAlert={showAlert} />;
         case 2:
-          return <DashboardInvestor showAlert={state.showAlert} />;
+          return <DashboardInvestor showAlert={showAlert} />;
       }
-    } else {
-      return <Redirect to="/login" />;
     }
   };
 
@@ -54,17 +105,26 @@ const App = () => {
       <Router>
         <div className="App">
           <Switch>
-            <Route exact path="/login" component={Login}></Route>
+            <PrivateRoute exact path="/login" />
             <Route exact path="/signup-farmer" component={SignUpFarmer}></Route>
             <Route
               exact
               path="/signup-investor"
               component={SignUpInvestor}
             ></Route>
-            <PrivateRoute exact path="/dashboard"></PrivateRoute>
+            <PrivateRoute exact path="/createProject" />
+            <PrivateRoute exact path="/dashboard" />
+            <Route path="*" exact component={My404Component} />
           </Switch>
+<<<<<<< HEAD
 
           {/* <p>{!data ? "Loading..." : data}</p> */}
+=======
+          {/* <p>
+            Try changing the value stored on <strong>line 42</strong> of App.js.
+          </p>
+          <div>The stored value is: {this.state.storageValue}</div> */}
+>>>>>>> 0f3a730095d33854c52722e9ef925be2e130c949
         </div>
       </Router>
     </>
