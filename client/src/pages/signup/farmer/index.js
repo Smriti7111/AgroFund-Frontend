@@ -106,12 +106,13 @@ export default function SignUpFarmer() {
     if (!pattern.test(contact)) {
       showAlert(true);
       setMessage("Please enter only number for phone number field");
-      if (contact.length != 10) {
-        setMessage("Please enter valid phone number");
-      }
       return false;
     }
-
+    if (contact.length != 10) {
+      showAlert(true);
+      setMessage("Please enter valid phone number");
+      return false;
+    }
     if (password !== confirmPassword) {
       showAlert(true);
       setMessage("Password and Confirm Password does not match");
