@@ -83,6 +83,10 @@ export default function Login({ location }) {
     password: "",
   });
 
+  useEffect(() => {
+    setLoginData({ ...loginData, walletAddress: walletAddress });
+  }, [walletAddress]);
+
   const sendLoginRequest = async () => {
     try {
       const res = await axios({
@@ -150,12 +154,13 @@ export default function Login({ location }) {
             required
             fullWidth
             id="username"
-            label="Username"
+            label="Wallet Address"
             name="walletAddress"
             value={loginData.walletAddress}
             onChange={handleChange}
             autoComplete="username"
             autoFocus
+            disabled={true}
           />
           <TextField
             variant="outlined"
