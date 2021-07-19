@@ -64,12 +64,11 @@ const App = () => {
     if (session == null) {
       return <Login location={location} />;
     }
-    let other = cookies.User.other;
-    if (pathname == "/createProject" && other.userType == 1) {
+    if (state && pathname == "/createProject" && state.usertype == 1) {
       return <CreateProject />;
     }
-    if (pathname == "/dashboard" || pathname == "/login") {
-      switch (other.userType) {
+    if (state && pathname == "/dashboard") {
+      switch (state.usertype) {
         case 0:
           return <DashboardAdmin showAlert={showAlert} />;
         case 1:
@@ -78,6 +77,7 @@ const App = () => {
           return <DashboardInvestor showAlert={showAlert} />;
       }
     }
+    return <Login location={location} />;
   };
 
   // state = { web3: null, accounts: null, contract: null };

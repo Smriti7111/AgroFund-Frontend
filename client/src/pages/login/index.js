@@ -92,11 +92,12 @@ export default function Login({ location }) {
       });
       let resData = res.data;
       let token = resData.other.token;
+      let usertype = resData.other.userType;
       sessionStorage.setItem("token", token);
       setCookie("User", resData, { path: "/" });
       console.log(`sessionStorage set with token value ${token}`);
       if (token) {
-        history.push("/dashboard", { showAlert: "true" });
+        history.push("/dashboard", { usertype, showAlert: "true" });
       } else {
         return <Redirect to="/login" />;
       }
