@@ -62,7 +62,7 @@ const App = () => {
     const showAlert = state ? state.showAlert : "false";
 
     if (session == null) {
-      return <Login />;
+      return <Login location={location} />;
     }
     let other = cookies.User.other;
     if (pathname == "/createProject" && other.userType == 1) {
