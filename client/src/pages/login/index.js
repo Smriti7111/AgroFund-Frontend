@@ -101,6 +101,7 @@ export default function Login({ location }) {
       let userType = resData.other.userType;
       sessionStorage.setItem("token", token);
       console.log(`sessionStorage set with token value ${token}`);
+      console.log(userType);
       if (token && userType) {
         history.push("/dashboard", { userType, showAlert: "true" });
       } else {
