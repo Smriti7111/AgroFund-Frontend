@@ -101,7 +101,17 @@ export default function SignUpFarmer() {
   };
 
   const validateForm = () => {
-    const { password, confirmPassword, check } = formData;
+    const { password, confirmPassword, check, contact } = formData;
+    const pattern = new RegExp(/^[0-9\b]+$/);
+    if (!pattern.test(contact)) {
+      showAlert(true);
+      setMessage("Please enter only number for phone number field");
+      if (contact.length != 10) {
+        setMessage("Please enter valid phone number");
+      }
+      return false;
+    }
+
     if (password !== confirmPassword) {
       showAlert(true);
       setMessage("Password and Confirm Password does not match");
