@@ -70,7 +70,6 @@ const App = () => {
   // };
 
   const PrivateRoute = ({ location, ...rest }) => {
-    let other = cookies.User.other;
     let session = sessionStorage.getItem("token");
     let pathname = location.pathname;
     let state = location.state;
@@ -79,6 +78,7 @@ const App = () => {
     if (session == null) {
       return <Login />;
     }
+    let other = cookies.User.other;
     if (pathname == "/createProject" && other.userType == 1) {
       return <CreateProject />;
     }
