@@ -68,8 +68,14 @@ export default function Login({ location }) {
   const [message, setMessage] = useState("");
   const history = useHistory();
   useEffect(() => {
-    console.log(getWalletAddress);
-    setWalletAddress(getWalletAddress);
+    const getWallet = async () => {
+      let address = await getWalletAddress();
+      setWalletAddress(address);
+    };
+    getWallet();
+  }, []);
+
+  useEffect(() => {
     if (location && location.state && location.state.message) {
       setMessage(location.state.message);
       showSuccessMessage(true);
