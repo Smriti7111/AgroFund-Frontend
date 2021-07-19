@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -17,7 +17,10 @@ import DashboardAdmin from "./pages/dashboard/admin/dashboard";
 import Login from "./pages/login";
 import SignUpFarmer from "./pages/signup/farmer";
 import SignUpInvestor from "./pages/signup/investor";
-<<<<<<< HEAD
+import CreateProject from "./components/CreateProject";
+import { useCookies } from "react-cookie";
+import My404Component from "./components/My404Component";
+const axios = require("axios");
 
 const App = () => {
   const [data, setData] = useState(null);
@@ -31,13 +34,7 @@ const App = () => {
       console.log("Account Changed");
     });
   }
-=======
-import CreateProject from "./components/CreateProject";
-import { useCookies } from "react-cookie";
-import My404Component from "./components/My404Component";
-const axios = require("axios");
 
-const App = () => {
   const [farmerData, setFarmerData] = useState([]);
   const [investorData, setInvestorData] = useState([]);
   const [cookies, setCookie] = useCookies(["user"]);
@@ -45,7 +42,6 @@ const App = () => {
     // getAllFarmers();
     // getAllInvestors();
   }, []);
->>>>>>> 0f3a730095d33854c52722e9ef925be2e130c949
 
   // const getAllFarmers = async () => {
   //   try {
@@ -116,15 +112,12 @@ const App = () => {
             <PrivateRoute exact path="/dashboard" />
             <Route path="*" exact component={My404Component} />
           </Switch>
-<<<<<<< HEAD
 
           {/* <p>{!data ? "Loading..." : data}</p> */}
-=======
           {/* <p>
             Try changing the value stored on <strong>line 42</strong> of App.js.
           </p>
           <div>The stored value is: {this.state.storageValue}</div> */}
->>>>>>> 0f3a730095d33854c52722e9ef925be2e130c949
         </div>
       </Router>
     </>
