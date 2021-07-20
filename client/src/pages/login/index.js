@@ -103,7 +103,7 @@ export default function Login({ location }) {
       let resData = res.data;
       let token = resData.other.token;
       sessionStorage.setItem("token", token);
-      setCookie("User", resData, { path: "/" });
+      await setCookie("User", resData, { path: "/" });
       console.log(`sessionStorage set with token value ${token}`);
       if (token) {
         history.push("/dashboard", { showAlert: "true" });
