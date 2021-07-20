@@ -34,7 +34,7 @@ const Navbar = () => {
   };
 
   const createProject = () => {
-    history.push("/createProject");
+    history.push("/createProject", { usertype: 1 });
   };
 
   const showButton = () => {
