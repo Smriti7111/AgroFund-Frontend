@@ -17,7 +17,7 @@ const VerificationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let id = sessionStorage.getItem("id");
+    let id = sessionStorage.getItem("data")._id;
     const res = await axios({
       method: "POST",
       url: `/api/farmer/verifyCode/${id}`,
