@@ -9,10 +9,6 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import CreateProject from "./CreateProject";
-import VerificationForm from "./VerificationForm";
-import Popup from "reactjs-popup";
-import "reactjs-popup/dist/index.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
