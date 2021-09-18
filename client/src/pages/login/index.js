@@ -92,10 +92,11 @@ export default function Login({ location }) {
       });
       let resData = res.data;
       let token = resData.other.token;
-      let data = resData.data;
+      let userdata = resData.data;
+      console.log(userdata);
       let usertype = resData.other.userType;
       sessionStorage.setItem("token", token);
-      sessionStorage.setItem("data", data);
+      sessionStorage.setItem("userdata", JSON.stringify(userdata));
       setCookie("User", resData, { path: "/" });
       console.log(`sessionStorage set with token value ${token}`);
       if (token) {

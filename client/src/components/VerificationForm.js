@@ -7,6 +7,9 @@ const VerificationForm = () => {
   const [verificationCode, setVerificationCode] = useState({
     code: "",
   });
+  let userData = JSON.parse(sessionStorage.getItem("userdata"));
+  let isPhoneVerified = userData.isPhoneVerified;
+  const [phoneverify, setIsPhoneVerify] = useState(isPhoneVerified);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setVerificationCode((prevState) => ({
@@ -17,14 +20,23 @@ const VerificationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let id = sessionStorage.getItem("data")._id;
+    let id = userData._id;
+    console.log(id);
     const res = await axios({
       method: "POST",
       url: `/api/farmer/verifyCode/${id}`,
       data: verificationCode,
     });
+    let resData = res.data;
+    let status = resData.data.status;
+    if (status === "approved") {
+      setIsPhoneVerify(true);
+      isPhoneVerified = true;
+    }
   };
-  return (
+  return phoneverify ? (
+    <p>Document Verification Form</p>
+  ) : (
     <form method="POST" onSubmit={handleSubmit}>
       <TextField
         variant="outlined"

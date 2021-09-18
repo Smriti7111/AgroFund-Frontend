@@ -43,7 +43,7 @@ const Navbar = () => {
   };
 
   const sendVerificationCode = async () => {
-    let id = sessionStorage.getItem("data")._id;
+    let id = JSON.parse(sessionStorage.getItem("userdata"))._id;
     const res = await axios({
       method: "GET",
       url: `/api/farmer/getVerificationCode/${id}`,
