@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -10,6 +10,9 @@ import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import CreateProject from "./CreateProject";
+import VerificationForm from "./VerificationForm";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +41,11 @@ const Navbar = () => {
     history.push("/createProject", { usertype: 1 });
   };
 
+  const showVerificationForm = () => {
+    sendVerificationCode();
+    history.push("/verificationForm");
+  };
+
   const sendVerificationCode = async () => {
     let id = sessionStorage.getItem("id");
     const res = await axios({
@@ -58,9 +66,11 @@ const Navbar = () => {
       );
     } else {
       return (
-        <Button color="inherit" onClick={sendVerificationCode}>
-          Verify
-        </Button>
+        <>
+          <Button color="inherit" onClick={showVerificationForm}>
+            Verify
+          </Button>
+        </>
       );
     }
   };

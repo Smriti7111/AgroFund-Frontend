@@ -18,6 +18,7 @@ import SignUpInvestor from "./pages/signup/investor";
 import CreateProject from "./components/CreateProject";
 import { useCookies } from "react-cookie";
 import My404Component from "./components/My404Component";
+import VerificationForm from "./components/VerificationForm";
 const axios = require("axios");
 
 const App = () => {
@@ -134,6 +135,11 @@ const App = () => {
           <Switch>
             <PrivateRoute exact path="/login" />
             <Route exact path="/signup-farmer" component={SignUpFarmer}></Route>
+            <Route
+              exact
+              path="/verificationForm"
+              component={VerificationForm}
+            ></Route>
             <Route
               exact
               path="/signup-investor"
