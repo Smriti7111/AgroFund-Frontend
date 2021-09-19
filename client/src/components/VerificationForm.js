@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
+import DocumentVerificationForm from "./DocumentVerificationForm";
 
 const VerificationForm = () => {
   const [verificationCode, setVerificationCode] = useState({
@@ -36,7 +37,7 @@ const VerificationForm = () => {
     }
   };
   return phoneverify ? (
-    <p>Document Verification Form</p>
+    <DocumentVerificationForm />
   ) : (
     <form method="POST" onSubmit={handleSubmit}>
       <TextField
@@ -44,7 +45,7 @@ const VerificationForm = () => {
         margin="normal"
         required
         id="code"
-        label="Type the verification Code in your Phone"
+        label="Enter 6 digit code that is sent to the mobile you registered"
         name="code"
         value={verificationCode.code}
         onChange={handleChange}
