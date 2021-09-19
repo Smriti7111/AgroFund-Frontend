@@ -31,7 +31,8 @@ const VerificationForm = () => {
     let status = resData.data.status;
     if (status === "approved") {
       setIsPhoneVerify(true);
-      isPhoneVerified = true;
+      userData.isPhoneVerified = true;
+      sessionStorage.setItem("userdata", JSON.stringify(userData));
     }
   };
   return phoneverify ? (
