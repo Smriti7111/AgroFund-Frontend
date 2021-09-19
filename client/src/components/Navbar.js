@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -8,7 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import CreateProject from "./CreateProject";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,6 +37,19 @@ const Navbar = () => {
     history.push("/createProject", { usertype: 1 });
   };
 
+  const showVerificationForm = () => {
+    sendVerificationCode();
+    history.push("/verificationForm");
+  };
+
+  const sendVerificationCode = async () => {
+    let id = JSON.parse(sessionStorage.getItem("userdata"))._id;
+    const res = await axios({
+      method: "GET",
+      url: `/api/farmer/getVerificationCode/${id}`,
+    });
+  };
+
   const showButton = () => {
     let user = cookies.User.data;
     if (user.hasProject) {
@@ -48,7 +61,13 @@ const Navbar = () => {
         </Button>
       );
     } else {
-      return <Button color="inherit">Verify</Button>;
+      return (
+        <>
+          <Button color="inherit" onClick={showVerificationForm}>
+            Verify
+          </Button>
+        </>
+      );
     }
   };
 
