@@ -21,24 +21,33 @@ const DocumentVerificationForm = () => {
   const [documentData, setDocumentData] = useState({
     citizenshipNo: "",
     panNo: "",
-    citizenship: "",
-    pan: "",
+    citizenship: undefined,
+    pan: undefined,
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // console.log(documentData.pan);
+    var formData = new FormData();
+    formData.append("panNo", documentData.panNo);
+    formData.append("citizenshipNo", documentData.citizenshipNo);
+    formData.append("pan", documentData.pan);
+    formData.append("citizenship", documentData.citizenship);
+
     const res = await axios({
       method: "POST",
       url: `/api/farmer/submitVerificationInfo`,
-      data: documentData,
       headers: {
         "auth-token": sessionStorage.getItem("token"),
       },
+      data: formData,
     });
+
+    // console.log(res.data);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name == "citizenship" || name == "pan") {
+    if (name === "citizenship" || name === "pan") {
       setDocumentData((prevState) => ({
         ...prevState,
         [name]: e.target.files[0],
@@ -50,6 +59,7 @@ const DocumentVerificationForm = () => {
       }));
     }
   };
+
   return (
     <>
       <Typography component="h1" variant="h5">
