@@ -24,6 +24,7 @@ const DocumentVerificationForm = () => {
     citizenship: undefined,
     pan: undefined,
   });
+  let usertype = sessionStorage.getItem("usertype");
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(documentData.pan);
@@ -33,14 +34,25 @@ const DocumentVerificationForm = () => {
     formData.append("pan", documentData.pan);
     formData.append("citizenship", documentData.citizenship);
 
-    const res = await axios({
-      method: "POST",
-      url: `/api/farmer/submitVerificationInfo`,
-      headers: {
-        "auth-token": sessionStorage.getItem("token"),
-      },
-      data: formData,
-    });
+    if (usertype == 1) {
+      await axios({
+        method: "POST",
+        url: `/api/farmer/submitVerificationInfo`,
+        headers: {
+          "auth-token": sessionStorage.getItem("token"),
+        },
+        data: formData,
+      });
+    } else if (usertype == 2) {
+      await axios({
+        method: "POST",
+        url: `/api/investor/submitVerificationInfo`,
+        headers: {
+          "auth-token": sessionStorage.getItem("token"),
+        },
+        data: formData,
+      });
+    }
 
     // console.log(res.data);
   };

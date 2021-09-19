@@ -44,10 +44,18 @@ const Navbar = () => {
 
   const sendVerificationCode = async () => {
     let id = JSON.parse(sessionStorage.getItem("userdata"))._id;
-    const res = await axios({
-      method: "GET",
-      url: `/api/farmer/getVerificationCode/${id}`,
-    });
+    let usertype = sessionStorage.getItem("usertype");
+    if (usertype == 1) {
+      await axios({
+        method: "GET",
+        url: `/api/farmer/getVerificationCode/${id}`,
+      });
+    } else if (usertype == 2) {
+      await axios({
+        method: "GET",
+        url: `/api/investor/getVerificationCode/${id}`,
+      });
+    }
   };
 
   const showButton = () => {

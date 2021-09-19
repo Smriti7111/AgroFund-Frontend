@@ -96,6 +96,7 @@ export default function Login({ location }) {
       console.log(userdata);
       let usertype = resData.other.userType;
       sessionStorage.setItem("token", token);
+      sessionStorage.setItem("usertype", usertype);
       sessionStorage.setItem("userdata", JSON.stringify(userdata));
       setCookie("User", resData, { path: "/" });
       console.log(`sessionStorage set with token value ${token}`);
