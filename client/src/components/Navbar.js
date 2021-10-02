@@ -60,6 +60,13 @@ const Navbar = () => {
 
   const showButton = () => {
     let user = cookies.User.data;
+    const conditionArray = [
+      user.hasPhoneVerified,
+      user.citizenshipNo != "",
+      user.citizenship != "",
+      user.panNo != "",
+      user.pan != "",
+    ];
     if (usertype != 0) {
       if (user.hasProject) {
         return <Button color="inherit">View my Project</Button>;
@@ -68,6 +75,15 @@ const Navbar = () => {
           <Button onClick={createProject} color="inherit">
             Create a Project
           </Button>
+        );
+      } else if (
+        conditionArray.indexOf(false) == -1 &&
+        user.isVerified == false
+      ) {
+        return (
+          <>
+            <Button color="inherit">PENDING VERIFICATION</Button>
+          </>
         );
       } else {
         return (
