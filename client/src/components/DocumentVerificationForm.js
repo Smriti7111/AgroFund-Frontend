@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import { Typography } from "@material-ui/core";
+import { Redirect, useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -25,6 +26,8 @@ const DocumentVerificationForm = () => {
     pan: undefined,
   });
   let usertype = sessionStorage.getItem("usertype");
+  const history = useHistory();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(documentData.pan);
@@ -54,7 +57,16 @@ const DocumentVerificationForm = () => {
       });
     }
 
-    // console.log(res.data);
+    if (sessionStorage.getItem("token")) {
+      history.push("/dashboard", {
+        usertype,
+        showAlert: "true",
+        message:
+          "Your documents for verification has been submitted, we'll notify you soon about the verification status",
+      });
+    } else {
+      return <Redirect to="/login" />;
+    }
   };
 
   const handleChange = (e) => {

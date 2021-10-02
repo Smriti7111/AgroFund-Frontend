@@ -93,15 +93,27 @@ export default function Login({ location }) {
       let resData = res.data;
       let token = resData.other.token;
       let userdata = resData.data;
+      let msg = "";
       console.log(userdata);
-      let usertype = resData.other.userType;
+      let usertype = resData.other.userType.toString();
       sessionStorage.setItem("token", token);
       sessionStorage.setItem("usertype", usertype);
       sessionStorage.setItem("userdata", JSON.stringify(userdata));
       setCookie("User", resData, { path: "/" });
       console.log(`sessionStorage set with token value ${token}`);
+      if (usertype == 0) {
+        msg = "Successfully logged in as an admin!";
+      } else if (usertype == 1) {
+        msg = "Successfully logged in as a farmer!";
+      } else {
+        msg = "Successfully logged in as an investor!";
+      }
       if (token) {
-        history.push("/dashboard", { usertype, showAlert: "true" });
+        history.push("/dashboard", {
+          usertype,
+          showAlert: "true",
+          message: msg,
+        });
       } else {
         return <Redirect to="/login" />;
       }

@@ -61,7 +61,7 @@ const App = () => {
     let pathname = location.pathname;
     let state = location.state;
     const showAlert = state ? state.showAlert : "false";
-
+    const message = state ? state.message : null;
     if (session == null) {
       return <Login location={location} />;
     }
@@ -70,12 +70,12 @@ const App = () => {
     }
     if (state && pathname == "/dashboard") {
       switch (state.usertype) {
-        case 0:
-          return <DashboardAdmin showAlert={showAlert} />;
-        case 1:
-          return <DashboardFarmer showAlert={showAlert} />;
-        case 2:
-          return <DashboardInvestor showAlert={showAlert} />;
+        case "0":
+          return <DashboardAdmin showAlert={showAlert} message={message} />;
+        case "1":
+          return <DashboardFarmer showAlert={showAlert} message={message} />;
+        case "2":
+          return <DashboardInvestor showAlert={showAlert} message={message} />;
       }
     }
     return <Login location={location} />;
