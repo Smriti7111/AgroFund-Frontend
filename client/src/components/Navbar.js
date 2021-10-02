@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = () => {
   const classes = useStyles();
   const history = useHistory();
+  let usertype = sessionStorage.getItem("usertype");
   const [cookies, setCookie] = useCookies(["user"]);
 
   const handleLogout = () => {
@@ -44,7 +45,6 @@ const Navbar = () => {
 
   const sendVerificationCode = async () => {
     let id = JSON.parse(sessionStorage.getItem("userdata"))._id;
-    let usertype = sessionStorage.getItem("usertype");
     if (usertype == 1) {
       await axios({
         method: "GET",
@@ -60,22 +60,24 @@ const Navbar = () => {
 
   const showButton = () => {
     let user = cookies.User.data;
-    if (user.hasProject) {
-      return <Button color="inherit">View my Project</Button>;
-    } else if (!user.hasProject && user.isVerified) {
-      return (
-        <Button onClick={createProject} color="inherit">
-          Create a Project
-        </Button>
-      );
-    } else {
-      return (
-        <>
-          <Button color="inherit" onClick={showVerificationForm}>
-            Verify
+    if (usertype != 0) {
+      if (user.hasProject) {
+        return <Button color="inherit">View my Project</Button>;
+      } else if (!user.hasProject && user.isVerified) {
+        return (
+          <Button onClick={createProject} color="inherit">
+            Create a Project
           </Button>
-        </>
-      );
+        );
+      } else {
+        return (
+          <>
+            <Button color="inherit" onClick={showVerificationForm}>
+              Verify
+            </Button>
+          </>
+        );
+      }
     }
   };
 
