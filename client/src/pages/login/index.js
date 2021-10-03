@@ -110,7 +110,6 @@ export default function Login({ location }) {
       }
       if (token) {
         history.push("/dashboard", {
-          usertype,
           showAlert: "true",
           message: msg,
         });

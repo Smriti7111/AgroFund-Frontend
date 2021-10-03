@@ -62,14 +62,15 @@ const App = () => {
     let state = location.state;
     const showAlert = state ? state.showAlert : "false";
     const message = state ? state.message : null;
+    const usertype = sessionStorage.getItem("usertype");
     if (session == null) {
       return <Login location={location} />;
     }
-    if (state && pathname == "/createProject" && state.usertype == 1) {
+    if (state && pathname == "/createProject" && usertype == 1) {
       return <CreateProject />;
     }
     if (state && pathname == "/dashboard") {
-      switch (state.usertype) {
+      switch (usertype) {
         case "0":
           return <DashboardAdmin showAlert={showAlert} message={message} />;
         case "1":

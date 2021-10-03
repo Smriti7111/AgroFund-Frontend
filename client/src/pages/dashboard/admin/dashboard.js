@@ -11,7 +11,8 @@ const DashboardAdmin = (props) => {
         <MyAlert setAlert={setAlert} severity="success" message={message} />
       ) : null}
       <Navbar />
-      <h1>Logged in as an admin</h1>
+      <h2>Show Farmer Verification Requests</h2>
+      <h2>Show Investor Verification Requests</h2>
     </>
   );
 };

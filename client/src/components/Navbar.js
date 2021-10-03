@@ -35,7 +35,7 @@ const Navbar = () => {
   };
 
   const createProject = () => {
-    history.push("/createProject", { usertype: 1 });
+    history.push("/createProject");
   };
 
   const showVerificationForm = () => {

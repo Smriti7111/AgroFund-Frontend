@@ -59,7 +59,6 @@ const DocumentVerificationForm = () => {
 
     if (sessionStorage.getItem("token")) {
       history.push("/dashboard", {
-        usertype,
         showAlert: "true",
         message:
           "Your documents for verification has been submitted, we'll notify you soon about the verification status",
