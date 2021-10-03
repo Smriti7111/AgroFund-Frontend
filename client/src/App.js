@@ -1,24 +1,15 @@
 import React, { useEffect, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import SimpleStorageContract from "./contracts/SimpleStorage.json";
 // import getWeb3 from "./getWeb3";
 
 import "./App.css";
-import DashboardFarmer from "./pages/dashboard/farmer/dashboard";
-import DashboardInvestor from "./pages/dashboard/investor/dashboard";
-import DashboardAdmin from "./pages/dashboard/admin/dashboard";
-import Login from "./pages/login";
 import SignUpFarmer from "./pages/signup/farmer";
 import SignUpInvestor from "./pages/signup/investor";
-import CreateProject from "./components/CreateProject";
 import { useCookies } from "react-cookie";
 import My404Component from "./components/My404Component";
 import VerificationForm from "./components/VerificationForm";
+import PrivateRoute from "./components/PrivateRoute";
 const axios = require("axios");
 
 const App = () => {
@@ -55,32 +46,6 @@ const App = () => {
   //     console.log(err);
   //   }
   // };
-
-  const PrivateRoute = ({ location, ...rest }) => {
-    let session = sessionStorage.getItem("token");
-    let pathname = location.pathname;
-    let state = location.state;
-    const showAlert = state ? state.showAlert : "false";
-    const message = state ? state.message : null;
-    const usertype = sessionStorage.getItem("usertype");
-    if (session == null) {
-      return <Login location={location} />;
-    }
-    if (state && pathname == "/createProject" && usertype == 1) {
-      return <CreateProject />;
-    }
-    if (state && pathname == "/dashboard") {
-      switch (usertype) {
-        case "0":
-          return <DashboardAdmin showAlert={showAlert} message={message} />;
-        case "1":
-          return <DashboardFarmer showAlert={showAlert} message={message} />;
-        case "2":
-          return <DashboardInvestor showAlert={showAlert} message={message} />;
-      }
-    }
-    return <Login location={location} />;
-  };
 
   // state = { web3: null, accounts: null, contract: null };
 

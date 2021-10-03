@@ -7,8 +7,10 @@ const DashboardFarmer = (props) => {
   const [alert, setAlert] = useState(showAlert);
   return (
     <>
-      {alert ? (
-        <MyAlert setAlert={setAlert} severity="success" message={message} />
+      {message ? (
+        alert ? (
+          <MyAlert setAlert={setAlert} severity="success" message={message} />
+        ) : null
       ) : null}
       <Navbar />
       <h1>Logged in as a farmer</h1>
