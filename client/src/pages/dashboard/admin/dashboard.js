@@ -7,8 +7,10 @@ const DashboardAdmin = (props) => {
   const [alert, setAlert] = useState(showAlert);
   return (
     <>
-      {alert ? (
-        <MyAlert setAlert={setAlert} severity="success" message={message} />
+      {message ? (
+        alert ? (
+          <MyAlert setAlert={setAlert} severity="success" message={message} />
+        ) : null
       ) : null}
       <Navbar />
       <h2>Show Farmer Verification Requests</h2>
