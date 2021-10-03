@@ -15,8 +15,10 @@ const PrivateRoute = ({ location, ...rest }) => {
   const showAlert = state ? state.showAlert : "false";
   const message = state ? state.message : null;
   const usertype = sessionStorage.getItem("usertype");
-  if (session == null) {
+  if (session == null && pathname == "/login") {
     return <Login location={location} />;
+  } else if (session == null) {
+    history.push("/login");
   }
   if (session && pathname == "/createProject" && usertype == 1) {
     return <CreateProject />;
