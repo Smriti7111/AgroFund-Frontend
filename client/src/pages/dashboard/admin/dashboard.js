@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "@material-ui/core";
 import Skeleton from "@material-ui/lab/Skeleton";
+import InvestorVerificationRequest from "../../../components/InvestorVerificationRequest";
 
 const useStyles = makeStyles({
   table: {
@@ -27,8 +28,8 @@ const useStyles = makeStyles({
 const DashboardAdmin = (props) => {
   const { showAlert, message } = props;
   const [alert, setAlert] = useState(showAlert);
-  const [farmerData, setFarmerData] = useState(null);
-  const [verificationData, setVerificationData] = useState([]);
+  const [farmerVeriData, setFarmerVeriData] = useState([]);
+  const [investorVeriData, setInvestorVeriData] = useState([]);
   const classes = useStyles();
 
   useEffect(() => {
@@ -48,12 +49,36 @@ const DashboardAdmin = (props) => {
               value.panNo != "",
               value.pan != "",
             ];
-            console.log("condition", conditionArray.indexOf(false));
             if (
               conditionArray.indexOf(false) == -1 &&
               value.isVerified == false
             ) {
-              setVerificationData((prevState) => [...prevState, value]);
+              setFarmerVeriData((prevState) => [...prevState, value]);
+            }
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    const getInvestorsWithRequest = async () => {
+      try {
+        const res = await axios({
+          method: "GET",
+          url: "/api/investor",
+        });
+        let resData = res.data.data;
+        resData &&
+          resData.map((value) => {
+            const conditionArray = [
+              value.isPhoneVerified,
+              value.citizenshipNo != "",
+              value.citizenship != "",
+            ];
+            if (
+              conditionArray.indexOf(false) == -1 &&
+              value.isVerified == false
+            ) {
+              setInvestorVeriData((prevState) => [...prevState, value]);
             }
           });
       } catch (err) {
@@ -61,6 +86,7 @@ const DashboardAdmin = (props) => {
       }
     };
     getFarmersWithRequest();
+    getInvestorsWithRequest();
   }, []);
 
   return (
@@ -82,8 +108,8 @@ const DashboardAdmin = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {verificationData ? (
-              verificationData.map((value, index) => {
+            {farmerVeriData ? (
+              farmerVeriData.map((value, index) => {
                 return <FarmerVerificationRequest key={index} val={value} />;
               })
             ) : (
@@ -97,6 +123,29 @@ const DashboardAdmin = (props) => {
         </Table>
       </TableContainer>
       <h2>Show Investor Verification Requests</h2>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell align="right">Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {investorVeriData ? (
+              investorVeriData.map((value, index) => {
+                return <InvestorVerificationRequest key={index} val={value} />;
+              })
+            ) : (
+              <div className={classes.root}>
+                <Skeleton />
+                <Skeleton animation={false} />
+                <Skeleton animation="wave" />
+              </div>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   );
 };

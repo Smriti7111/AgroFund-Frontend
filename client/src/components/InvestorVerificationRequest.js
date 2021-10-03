@@ -1,10 +1,10 @@
-import { Button, ButtonGroup, TableCell, TableRow } from "@material-ui/core";
-import React, { useEffect } from "react";
+import { Button, TableCell, TableRow } from "@material-ui/core";
+import React from "react";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-const FarmerVerificationRequest = (props) => {
+const InvestorVerificationRequest = (props) => {
   const { name } = props.val;
   return (
     <TableRow>
@@ -34,4 +34,4 @@ const FarmerVerificationRequest = (props) => {
   );
 };
 
-export default FarmerVerificationRequest;
+export default InvestorVerificationRequest;
