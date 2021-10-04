@@ -3,16 +3,26 @@ import React, { useEffect } from "react";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { useHistory } from "react-router";
 
 const FarmerVerificationRequest = (props) => {
   const { name } = props.val;
+  const history = useHistory();
+
+  const showFarmerDetails = () => {
+    history.push("/individualFarmerDetail");
+  };
   return (
     <TableRow>
       <TableCell component="th" scope="row">
         {name}
       </TableCell>
       <TableCell align="right">
-        <Button startIcon={<VisibilityIcon />} variant="contained">
+        <Button
+          startIcon={<VisibilityIcon />}
+          variant="contained"
+          onClick={showFarmerDetails}
+        >
           View Details
         </Button>{" "}
         <Button

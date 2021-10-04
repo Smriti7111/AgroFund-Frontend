@@ -6,6 +6,8 @@ import CreateProject from "./CreateProject";
 import Login from "../pages/login";
 
 import { useHistory } from "react-router-dom";
+import IndividualFarmerDetail from "../pages/dashboard/farmer/individualFarmerDetail";
+import IndividualInvestorDetail from "../pages/dashboard/investor/individualInvestorDetail";
 
 const PrivateRoute = ({ location, ...rest }) => {
   let session = sessionStorage.getItem("token");
@@ -20,8 +22,15 @@ const PrivateRoute = ({ location, ...rest }) => {
   } else if (session == null) {
     history.push("/login");
   }
-  if (session && pathname == "/createProject" && usertype == 1) {
+  if (session && pathname == "/createProject" && usertype == "1") {
     return <CreateProject />;
+  }
+  if (session && usertype == "0") {
+    if (pathname == "/individualFarmerDetail") {
+      return <IndividualFarmerDetail />;
+    } else if (pathname == "/individualInvestorDetail") {
+      return <IndividualInvestorDetail />;
+    }
   }
   if (session && pathname == "/login") {
     history.push("/dashboard");
