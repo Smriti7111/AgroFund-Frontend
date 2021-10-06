@@ -4,13 +4,23 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useHistory } from "react-router";
+import axios from "axios";
 
 const FarmerVerificationRequest = (props) => {
-  const { name } = props.val;
+  const farmerDetails = props.val;
+  const { name, _id } = farmerDetails;
   const history = useHistory();
 
   const showFarmerDetails = () => {
     history.push("/individualFarmerDetail");
+  };
+
+  const verifyUser = async () => {
+    await axios({
+      method: "PUT",
+      url: `/api/farmer/${_id}`,
+      data: { isVerified: true },
+    });
   };
   return (
     <TableRow>
@@ -29,6 +39,7 @@ const FarmerVerificationRequest = (props) => {
           style={{ backgroundColor: "#2bad4e", color: "white" }}
           startIcon={<CheckBoxIcon />}
           variant="contained"
+          onClick={verifyUser}
         >
           Verify
         </Button>{" "}
