@@ -15,13 +15,14 @@ const FarmerVerificationRequest = (props) => {
     history.push("/individualFarmerDetail");
   };
 
-  const verifyUser = async () => {
+  const verifyFarmer = async () => {
     await axios({
       method: "PUT",
       url: `/api/farmer/${_id}`,
       data: { isVerified: true },
     });
   };
+
   return (
     <TableRow>
       <TableCell component="th" scope="row">
@@ -39,7 +40,7 @@ const FarmerVerificationRequest = (props) => {
           style={{ backgroundColor: "#2bad4e", color: "white" }}
           startIcon={<CheckBoxIcon />}
           variant="contained"
-          onClick={verifyUser}
+          onClick={verifyFarmer}
         >
           Verify
         </Button>{" "}

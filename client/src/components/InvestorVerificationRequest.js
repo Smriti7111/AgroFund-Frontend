@@ -4,13 +4,22 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useHistory } from "react-router";
+import axios from "axios";
 
 const InvestorVerificationRequest = (props) => {
-  const { name } = props.val;
+  const { name, _id } = props.val;
   const history = useHistory();
 
   const showInvestorDetails = () => {
     history.push("/individualInvestorDetail");
+  };
+
+  const verifyInvestor = async () => {
+    await axios({
+      method: "PUT",
+      url: `/api/investor/${_id}`,
+      data: { isVerified: true },
+    });
   };
 
   return (
@@ -30,6 +39,7 @@ const InvestorVerificationRequest = (props) => {
           style={{ backgroundColor: "#2bad4e", color: "white" }}
           startIcon={<CheckBoxIcon />}
           variant="contained"
+          onClick={verifyInvestor}
         >
           Verify
         </Button>{" "}
