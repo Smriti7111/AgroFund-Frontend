@@ -37,7 +37,7 @@ const DocumentVerificationForm = () => {
     formData.append("pan", documentData.pan);
     formData.append("citizenship", documentData.citizenship);
 
-    if (usertype == 1) {
+    if (usertype == "1") {
       await axios({
         method: "POST",
         url: `/api/farmer/submitVerificationInfo`,
@@ -46,7 +46,7 @@ const DocumentVerificationForm = () => {
         },
         data: formData,
       });
-    } else if (usertype == 2) {
+    } else if (usertype == "2") {
       await axios({
         method: "POST",
         url: `/api/investor/submitVerificationInfo`,
@@ -122,32 +122,36 @@ const DocumentVerificationForm = () => {
                 />
               </Button>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                autoComplete="name"
-                name="panNo"
-                value={documentData.panNo}
-                onChange={handleChange}
-                variant="outlined"
-                required
-                fullWidth
-                id="panNo"
-                label="Pan No."
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Button fullWidth variant="contained" component="label">
-                Upload PAN Card
-                <input
-                  name="pan"
-                  // value={documentData.pan}
-                  onChange={handleChange}
-                  type="file"
-                  hidden
-                />
-              </Button>
-            </Grid>
+            {usertype == "1" && (
+              <>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    autoComplete="name"
+                    name="panNo"
+                    value={documentData.panNo}
+                    onChange={handleChange}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="panNo"
+                    label="Pan No."
+                    autoFocus
+                  />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Button fullWidth variant="contained" component="label">
+                    Upload PAN Card
+                    <input
+                      name="pan"
+                      // value={documentData.pan}
+                      onChange={handleChange}
+                      type="file"
+                      hidden
+                    />
+                  </Button>
+                </Grid>
+              </>
+            )}
           </Grid>
         </Grid>
         <Button
