@@ -10,6 +10,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import React, { useState } from "react";
 import Navbar from "./Navbar";
+import axios from "axios";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,15 +38,17 @@ const useStyles = makeStyles((theme) => ({
 
 const CreateProject = () => {
   const classes = useStyles();
+  const history = useHistory();
 
   const [formData, setFormData] = useState({
-    project_title: "",
-    total_amount: "",
-    minimum_amount: "",
-    return: "",
-    last_date: "",
-    completion_date: "",
-    maximum_investment: "",
+    title: "",
+    projectDescription: "",
+    investmentToBeRaised: "",
+    minimumInvestment: "",
+    returnPerMinimumInvestment: "",
+    lastDateOfInvestment: "",
+    expectedDateOfProjectCompletion: "",
+    maximumInvestment: "",
   });
 
   const handleChange = (e) => {
@@ -57,6 +61,25 @@ const CreateProject = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    axios({
+      method: "POST",
+      url: "/api/project/",
+      headers: {
+        "auth-token": sessionStorage.getItem("token"),
+      },
+      data: formData,
+    }).then(
+      (response) => {
+        console.log(response);
+        history.push("/dashboard", {
+          message:
+            "You have successfully submitted your project. We'll review and update you.",
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   };
 
   return (
@@ -76,13 +99,13 @@ const CreateProject = () => {
               <Grid item xs={12} sm={12} md={12}>
                 <TextField
                   autoComplete="name"
-                  name="name"
+                  name="title"
                   value={formData.project_title}
                   onChange={handleChange}
                   variant="outlined"
                   required
                   fullWidth
-                  id="project_title"
+                  id="title"
                   label="Project Title"
                   autoFocus
                 />
@@ -92,10 +115,11 @@ const CreateProject = () => {
                   variant="outlined"
                   required
                   fullWidth
-                  id="total_amount"
+                  type="number"
+                  id="investmentToBeRaised"
                   label="Amount to be raised"
-                  name="total_amount"
-                  value={formData.total_amount}
+                  name="investmentToBeRaised"
+                  value={formData.investmentToBeRaised}
                   onChange={handleChange}
                 />
               </Grid>
@@ -104,10 +128,11 @@ const CreateProject = () => {
                   variant="outlined"
                   required
                   fullWidth
-                  id="minimum_amount"
+                  type="number"
+                  id="minimumInvestment"
                   label="Minimum Investment Amount"
-                  name="minimum_amount"
-                  value={formData.minimum_amount}
+                  name="minimumInvestment"
+                  value={formData.minimumInvestment}
                   onChange={handleChange}
                   autoComplete="number"
                 />
@@ -117,23 +142,23 @@ const CreateProject = () => {
                   variant="outlined"
                   required
                   fullWidth
-                  id="return"
+                  id="returnPerMinimumInvestment"
                   label="Return per Minimum Investment"
-                  name="return"
-                  value={formData.return}
+                  name="returnPerMinimumInvestment"
+                  value={formData.returnPerMinimumInvestment}
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12} sm={6} md={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <TextField
                   variant="outlined"
                   required
                   fullWidth
-                  name="last_date"
-                  value={formData.last_date}
+                  name="lastDateOfInvestment"
+                  value={formData.lastDateOfInvestment}
                   onChange={handleChange}
                   label="Last date of Investment"
-                  id="last_date"
+                  id="lastDateOfInvestment"
                 />
               </Grid>
               <Grid item xs={12} md={6}>
@@ -141,9 +166,9 @@ const CreateProject = () => {
                   variant="outlined"
                   required
                   fullWidth
-                  id="completion_date"
-                  name="completion_date"
-                  value={formData.completion_date}
+                  id="expectedDateOfProjectCompletion"
+                  name="expectedDateOfProjectCompletion"
+                  value={formData.expectedDateOfProjectCompletion}
                   onChange={handleChange}
                   label="Expected date of Project Completion"
                 />
@@ -153,11 +178,26 @@ const CreateProject = () => {
                   variant="outlined"
                   required
                   fullWidth
-                  id="maximum_investment"
-                  name="maximum_investment"
-                  value={formData.maximum_investment}
+                  type="number"
+                  id="maximumInvestment"
+                  name="maximumInvestment"
+                  value={formData.maximumInvestment}
                   onChange={handleChange}
                   label="Maximum Investment Amount"
+                />
+              </Grid>
+              <Grid item xs={12} md={12}>
+                <TextField
+                  id="projectDescription"
+                  name="projectDescription"
+                  value={formData.projectDescription}
+                  onChange={handleChange}
+                  label="Project Description"
+                  placeholder="Project Description"
+                  variant="outlined"
+                  rows={5}
+                  fullWidth
+                  multiline
                 />
               </Grid>
             </Grid>
