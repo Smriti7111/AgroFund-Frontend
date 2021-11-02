@@ -59,7 +59,7 @@ const Navbar = () => {
   };
 
   const showButton = () => {
-    let user = cookies.User.data;
+    let user = JSON.parse(sessionStorage.getItem("userdata"));
     const conditionArray = [
       user.hasPhoneVerified,
       user.citizenshipNo != "",
