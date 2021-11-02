@@ -63,7 +63,7 @@ const CreateProject = () => {
     e.preventDefault();
     axios({
       method: "POST",
-      url: "/api/project/",
+      url: "/api/project",
       headers: {
         "auth-token": sessionStorage.getItem("token"),
       },
