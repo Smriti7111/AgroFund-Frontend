@@ -20,7 +20,7 @@ const FarmerVerificationRequest = (props) => {
       method: "PUT",
       url: `/api/farmer/${_id}`,
       data: { isVerified: true },
-    });
+    }).then((res) => console.log(res));
   };
 
   return (

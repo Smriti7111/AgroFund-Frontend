@@ -12,6 +12,9 @@ import React, { useState } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
 import { useHistory } from "react-router";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import "../App.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,6 +84,8 @@ const CreateProject = () => {
       }
     );
   };
+
+  console.log(formData.projectDescription);
 
   return (
     <>
@@ -187,7 +192,25 @@ const CreateProject = () => {
                 />
               </Grid>
               <Grid item xs={12} md={12}>
-                <TextField
+                <h5>Project Description</h5>
+                <CKEditor
+                  editor={ClassicEditor}
+                  data=""
+                  config={{
+                    ckfinder: {
+                      uploadUrl: "/api/project/uploads",
+                    },
+                    removePlugins: ["MediaEmbed"],
+                    mediaEmbed: {},
+                  }}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    setFormData({ ...formData, projectDescription: data });
+                    // console.log({ event, editor, data });
+                  }}
+                />
+
+                {/* <TextField
                   id="projectDescription"
                   name="projectDescription"
                   value={formData.projectDescription}
@@ -198,7 +221,7 @@ const CreateProject = () => {
                   rows={5}
                   fullWidth
                   multiline
-                />
+                /> */}
               </Grid>
             </Grid>
 
