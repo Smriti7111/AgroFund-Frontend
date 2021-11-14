@@ -48,7 +48,7 @@ const SingleProject = (props) => {
         </CardActionArea>
         <CardActions>
           <Button size="small" color="primary">
-            Read more
+            Show Details >>
           </Button>
         </CardActions>
       </Card>
