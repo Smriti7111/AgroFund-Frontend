@@ -8,6 +8,7 @@ import Login from "../pages/login";
 import { useHistory } from "react-router-dom";
 import IndividualFarmerDetail from "../pages/dashboard/farmer/individualFarmerDetail";
 import IndividualInvestorDetail from "../pages/dashboard/investor/individualInvestorDetail";
+import AllProjectsSection from "../components/AllProjectsSection";
 
 const PrivateRoute = ({ location, ...rest }) => {
   let session = sessionStorage.getItem("token");
@@ -44,6 +45,9 @@ const PrivateRoute = ({ location, ...rest }) => {
       case "2":
         return <DashboardInvestor showAlert={showAlert} message={message} />;
     }
+  }
+  if (session && pathname == "/allFarmerProjects") {
+    return <AllProjectsSection />;
   }
   return <Login location={location} />;
 };

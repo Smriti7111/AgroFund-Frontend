@@ -115,6 +115,7 @@ const App = () => {
             <PrivateRoute exact path="/dashboard" />
             <PrivateRoute exact path="/individualFarmerDetail" />
             <PrivateRoute exact path="/individualInvestorDetail" />
+            <PrivateRoute exact path="/allFarmerProjects" />
             <Route path="*" exact component={My404Component} />
           </Switch>
           {/* <p>

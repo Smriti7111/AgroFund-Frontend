@@ -58,6 +58,10 @@ const Navbar = () => {
     }
   };
 
+  const viewProjects = () => {
+    history.push("/allFarmerProjects");
+  };
+
   const showButton = () => {
     let user = JSON.parse(sessionStorage.getItem("userdata"));
     const conditionArray = [
@@ -112,6 +116,9 @@ const Navbar = () => {
           <Typography variant="h6" className={classes.title}>
             Agro Fund
           </Typography>
+          <Button onClick={viewProjects} color="inherit">
+            Show Projects
+          </Button>
           {showButton()}
           <Button onClick={handleLogout} color="inherit">
             Logout
