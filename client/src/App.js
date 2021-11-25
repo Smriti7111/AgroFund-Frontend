@@ -1,26 +1,15 @@
-import React, { useContext, useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// import SimpleStorageContract from "./contracts/SimpleStorage.json";
+// import getWeb3 from "./getWeb3";
 
 import "./App.css";
-import { walletContext } from "./Context/WalletContext";
-
-import "./App.css";
-import DashboardFarmer from "./pages/dashboard/farmer/dashboard";
-import DashboardInvestor from "./pages/dashboard/investor/dashboard";
-import DashboardAdmin from "./pages/dashboard/admin/dashboard";
-
-import Login from "./pages/login";
 import SignUpFarmer from "./pages/signup/farmer";
 import SignUpInvestor from "./pages/signup/investor";
-import CreateProject from "./components/CreateProject";
 import { useCookies } from "react-cookie";
 import My404Component from "./components/My404Component";
 import VerificationForm from "./components/VerificationForm";
+import PrivateRoute from "./components/PrivateRoute";
 const axios = require("axios");
 
 const App = () => {
@@ -70,31 +59,6 @@ const App = () => {
   //   }
   // };
 
-  const PrivateRoute = ({ location, ...rest }) => {
-    let session = sessionStorage.getItem("token");
-    let pathname = location.pathname;
-    let state = location.state;
-    const showAlert = state ? state.showAlert : "false";
-
-    if (session == null) {
-      return <Login location={location} />;
-    }
-    if (state && pathname == "/createProject" && state.usertype == 1) {
-      return <CreateProject />;
-    }
-    if (state && pathname == "/dashboard") {
-      switch (state.usertype) {
-        case 0:
-          return <DashboardAdmin showAlert={showAlert} />;
-        case 1:
-          return <DashboardFarmer showAlert={showAlert} />;
-        case 2:
-          return <DashboardInvestor showAlert={showAlert} />;
-      }
-    }
-    return <Login location={location} />;
-  };
-
   // state = { web3: null, accounts: null, contract: null };
 
   return (
@@ -116,6 +80,9 @@ const App = () => {
             ></Route>
             <PrivateRoute exact path="/createProject" />
             <PrivateRoute exact path="/dashboard" />
+            <PrivateRoute exact path="/individualFarmerDetail" />
+            <PrivateRoute exact path="/individualInvestorDetail" />
+            <PrivateRoute exact path="/allFarmerProjects" />
             <Route path="*" exact component={My404Component} />
           </Switch>
 

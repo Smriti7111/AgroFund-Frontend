@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = () => {
   const classes = useStyles();
   const history = useHistory();
+  let usertype = sessionStorage.getItem("usertype");
   const [cookies, setCookie] = useCookies(["user"]);
 
   const handleLogout = () => {
@@ -34,7 +35,7 @@ const Navbar = () => {
   };
 
   const createProject = () => {
-    history.push("/createProject", { usertype: 1 });
+    history.push("/createProject");
   };
 
   const showVerificationForm = () => {
@@ -44,30 +45,59 @@ const Navbar = () => {
 
   const sendVerificationCode = async () => {
     let id = JSON.parse(sessionStorage.getItem("userdata"))._id;
-    const res = await axios({
-      method: "GET",
-      url: `/api/farmer/getVerificationCode/${id}`,
-    });
+    if (usertype == 1) {
+      await axios({
+        method: "GET",
+        url: `/api/farmer/getVerificationCode/${id}`,
+      });
+    } else if (usertype == 2) {
+      await axios({
+        method: "GET",
+        url: `/api/investor/getVerificationCode/${id}`,
+      });
+    }
+  };
+
+  const viewProjects = () => {
+    history.push("/allFarmerProjects");
   };
 
   const showButton = () => {
-    let user = cookies.User.data;
-    if (user.hasProject) {
-      return <Button color="inherit">View my Project</Button>;
-    } else if (!user.hasProject && user.isVerified) {
-      return (
-        <Button onClick={createProject} color="inherit">
-          Create a Project
-        </Button>
-      );
-    } else {
-      return (
-        <>
-          <Button color="inherit" onClick={showVerificationForm}>
-            Verify
+    let user = JSON.parse(sessionStorage.getItem("userdata"));
+    const conditionArray = [
+      user.hasPhoneVerified,
+      user.citizenshipNo != "",
+      user.citizenship != "",
+      user.panNo != "",
+      user.pan != "",
+    ];
+    if (usertype != 0) {
+      if (user.hasProject) {
+        return <Button color="inherit">View my Project</Button>;
+      } else if (!user.hasProject && user.isVerified) {
+        return (
+          <Button onClick={createProject} color="inherit">
+            Create a Project
           </Button>
-        </>
-      );
+        );
+      } else if (
+        conditionArray.indexOf(false) == -1 &&
+        user.isVerified == false
+      ) {
+        return (
+          <>
+            <Button color="inherit">PENDING VERIFICATION</Button>
+          </>
+        );
+      } else {
+        return (
+          <>
+            <Button color="inherit" onClick={showVerificationForm}>
+              Verify
+            </Button>
+          </>
+        );
+      }
     }
   };
 
@@ -86,6 +116,9 @@ const Navbar = () => {
           <Typography variant="h6" className={classes.title}>
             Agro Fund
           </Typography>
+          <Button onClick={viewProjects} color="inherit">
+            Show Projects
+          </Button>
           {showButton()}
           <Button onClick={handleLogout} color="inherit">
             Logout

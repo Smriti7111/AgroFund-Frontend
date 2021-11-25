@@ -9,6 +9,7 @@ const VerificationForm = () => {
     code: "",
   });
   let userData = JSON.parse(sessionStorage.getItem("userdata"));
+  let usertype = sessionStorage.getItem("usertype");
   let isPhoneVerified = userData.isPhoneVerified;
   const [phoneverify, setIsPhoneVerify] = useState(isPhoneVerified);
   const handleChange = (e) => {
@@ -22,12 +23,20 @@ const VerificationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let id = userData._id;
-    console.log(id);
-    const res = await axios({
-      method: "POST",
-      url: `/api/farmer/verifyCode/${id}`,
-      data: verificationCode,
-    });
+    let res = null;
+    if (usertype == 1) {
+      res = await axios({
+        method: "POST",
+        url: `/api/farmer/verifyCode/${id}`,
+        data: verificationCode,
+      });
+    } else if (usertype == 2) {
+      res = await axios({
+        method: "POST",
+        url: `/api/investor/verifyCode/${id}`,
+        data: verificationCode,
+      });
+    }
     let resData = res.data;
     let status = resData.data.status;
     if (status === "approved") {

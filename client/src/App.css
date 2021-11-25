@@ -20,3 +20,6 @@
 .App-link {
   color: #09d3ac;
 }
+.ck-editor__editable {
+  min-height: 12rem !important;
+}

@@ -5,6 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import { Typography } from "@material-ui/core";
+import { Redirect, useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -24,6 +25,9 @@ const DocumentVerificationForm = () => {
     citizenship: undefined,
     pan: undefined,
   });
+  let usertype = sessionStorage.getItem("usertype");
+  const history = useHistory();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(documentData.pan);
@@ -33,16 +37,35 @@ const DocumentVerificationForm = () => {
     formData.append("pan", documentData.pan);
     formData.append("citizenship", documentData.citizenship);
 
-    const res = await axios({
-      method: "POST",
-      url: `/api/farmer/submitVerificationInfo`,
-      headers: {
-        "auth-token": sessionStorage.getItem("token"),
-      },
-      data: formData,
-    });
+    if (usertype == "1") {
+      await axios({
+        method: "POST",
+        url: `/api/farmer/submitVerificationInfo`,
+        headers: {
+          "auth-token": sessionStorage.getItem("token"),
+        },
+        data: formData,
+      });
+    } else if (usertype == "2") {
+      await axios({
+        method: "POST",
+        url: `/api/investor/submitVerificationInfo`,
+        headers: {
+          "auth-token": sessionStorage.getItem("token"),
+        },
+        data: formData,
+      });
+    }
 
-    // console.log(res.data);
+    if (sessionStorage.getItem("token")) {
+      history.push("/dashboard", {
+        showAlert: "true",
+        message:
+          "Your documents for verification has been submitted, we'll notify you soon about the verification status",
+      });
+    } else {
+      return <Redirect to="/login" />;
+    }
   };
 
   const handleChange = (e) => {
@@ -99,32 +122,36 @@ const DocumentVerificationForm = () => {
                 />
               </Button>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                autoComplete="name"
-                name="panNo"
-                value={documentData.panNo}
-                onChange={handleChange}
-                variant="outlined"
-                required
-                fullWidth
-                id="panNo"
-                label="Pan No."
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Button fullWidth variant="contained" component="label">
-                Upload PAN Card
-                <input
-                  name="pan"
-                  // value={documentData.pan}
-                  onChange={handleChange}
-                  type="file"
-                  hidden
-                />
-              </Button>
-            </Grid>
+            {usertype == "1" && (
+              <>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    autoComplete="name"
+                    name="panNo"
+                    value={documentData.panNo}
+                    onChange={handleChange}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="panNo"
+                    label="Pan No."
+                    autoFocus
+                  />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Button fullWidth variant="contained" component="label">
+                    Upload PAN Card
+                    <input
+                      name="pan"
+                      // value={documentData.pan}
+                      onChange={handleChange}
+                      type="file"
+                      hidden
+                    />
+                  </Button>
+                </Grid>
+              </>
+            )}
           </Grid>
         </Grid>
         <Button
