@@ -23,11 +23,25 @@ const AllProjectsSection = () => {
   return (
     <>
       <Navbar />
-      <Grid container spacing={3} alignItems="center" justifyContent="center">
+      <Grid
+        container
+        spacing={3}
+        alignItems="center"
+        justifyContent="center"
+        style={{ marginTop: 30 }}
+      >
         {allProjects &&
           allProjects.map((value, index) => {
             return (
-              <Grid item xs={12} md={6} key={index}>
+              <Grid
+                item
+                container
+                xs={12}
+                md={4}
+                key={index}
+                alignItems="center"
+                justifyContent="center"
+              >
                 <SingleProject val={value} />
               </Grid>
             );
