@@ -3,7 +3,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 import DocumentVerificationForm from "./DocumentVerificationForm";
-import { makeStyles, Grid } from "@material-ui/core";
+import { makeStyles, Grid, CardMedia, Card } from "@material-ui/core";
+import Navbar from "../components/Navbar";
 
 const useStyles = makeStyles({
   root: {
@@ -11,6 +12,12 @@ const useStyles = makeStyles({
   },
   button: {
     width: "30%",
+  },
+  card: {
+    margin: "12%",
+  },
+  root1: {
+    margin: "21px",
   },
 });
 const VerificationForm = () => {
@@ -56,33 +63,49 @@ const VerificationForm = () => {
     }
   };
   return phoneverify ? (
-    <DocumentVerificationForm />
+    <>
+      <Navbar />
+      <DocumentVerificationForm />
+    </>
   ) : (
-    <Grid container spacing={3}>
-      <Grid container item>
-        <form method="POST" onSubmit={handleSubmit} className={classes.root}>
-          <Grid item>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              id="code"
-              label="Enter 6 digit code sent to mobile you registered"
-              name="code"
-              value={verificationCode.code}
-              onChange={handleChange}
-              autoFocus
-            />
-          </Grid>
+    <>
+      <Navbar />
+      <Grid container spacing={3} className={classes.root}>
+        <Grid
+          container
+          item
+          justifyContent="center"
+          alignItems="center"
+          className={classes.card}
+        >
+          <Card variant="outlined">
+            <Grid container item className={classes.root1}>
+              <form method="POST" onSubmit={handleSubmit}>
+                <Grid item>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    id="code"
+                    label="Enter 6 digit code sent to mobile you registered"
+                    name="code"
+                    value={verificationCode.code}
+                    onChange={handleChange}
+                    autoFocus
+                  />
+                </Grid>
 
-          <Grid item>
-            <Button type="submit" variant="contained" color="primary">
-              Verify Code
-            </Button>
-          </Grid>
-        </form>
+                <Grid item>
+                  <Button type="submit" variant="contained" color="primary">
+                    Verify Code
+                  </Button>
+                </Grid>
+              </form>
+            </Grid>
+          </Card>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 
