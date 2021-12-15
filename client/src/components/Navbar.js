@@ -103,7 +103,7 @@ const Navbar = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ backgroundColor: "#06a120" }}>
         <Toolbar>
           <IconButton
             edge="start"

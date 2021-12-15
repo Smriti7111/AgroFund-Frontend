@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     width: "60%",
     height: "80%",
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
+    border: "2px solid #13471c",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
@@ -56,7 +56,7 @@ const SingleProject = (props) => {
     setOpen(false);
   };
 
-  const modalStyle = { left: "17%", top: "8%", border: "1px solid blue" };
+  const modalStyle = { left: "17%", top: "8%" };
 
   return (
     <>

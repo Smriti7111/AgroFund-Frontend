@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useCookies } from "react-cookie";
+import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 
 // Context Import
 import { walletContext } from "../../Context/WalletContext";
@@ -22,6 +23,14 @@ import { getWalletAddress } from "../../helpers/GetWalletAddress";
 import axios from "axios";
 import { Redirect, useHistory } from "react-router-dom";
 import MyAlert from "../../components/MyAlert";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#06a120",
+    },
+  },
+});
 
 function Copyright() {
   return (
@@ -56,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: "#06a120",
   },
 }));
 
@@ -136,87 +146,86 @@ export default function Login({ location }) {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      {errorMessage ? (
-        <MyAlert
-          setAlert={showErrorMessage}
-          severity="error"
-          message="Login unsuccessful"
-        />
-      ) : null}
-      {successMessage ? (
-        <MyAlert
-          setAlert={showSuccessMessage}
-          severity="success"
-          message={message}
-        />
-      ) : null}
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Log In
-        </Typography>
-        <form method="POST" onSubmit={handleLogin} className={classes.form}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Username"
-            name="walletAddress"
-            value={loginData.walletAddress}
-            onChange={handleChange}
-            autoComplete="username"
-            autoFocus
+    <MuiThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        {errorMessage ? (
+          <MyAlert
+            setAlert={showErrorMessage}
+            severity="error"
+            message="Login unsuccessful"
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            value={loginData.password}
-            onChange={handleChange}
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
+        ) : null}
+        {successMessage ? (
+          <MyAlert
+            setAlert={showSuccessMessage}
+            severity="success"
+            message={message}
           />
-          <FormControlLabel
-            className={classes.root}
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
+        ) : null}
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Typography component="h1" variant="h5">
             Log In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+          </Typography>
+          <form method="POST" onSubmit={handleLogin} className={classes.form}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="walletAddress"
+              value={loginData.walletAddress}
+              onChange={handleChange}
+              autoComplete="username"
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              value={loginData.password}
+              onChange={handleChange}
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <FormControlLabel
+              className={classes.root}
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Log In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="/signup-investor" variant="body2">
+                  {"Don't have an account? Join Now"}
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link href="/signup-investor" variant="body2">
-                {"Don't have an account? Join Now"}
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
+          </form>
+        </div>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+      </Container>
+    </MuiThemeProvider>
   );
 }
