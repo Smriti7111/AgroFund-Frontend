@@ -7,20 +7,47 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
+import Modal from "@material-ui/core/Modal";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "80%",
   },
   media: {
     height: 140,
   },
-});
+  paper: {
+    position: "absolute",
+    width: "60%",
+    height: "80%",
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+  modal: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+}));
+
 const SingleProject = (props) => {
   const classes = useStyles();
   const { title, investmentToBeRaised, maximumInvestment, minimumInvestment } =
     props.val;
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const modalStyle = { left: "17%", top: "8%", border: "1px solid blue" };
+
   return (
     <>
       <Card className={classes.root}>
@@ -47,11 +74,22 @@ const SingleProject = (props) => {
           </Typography>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary">
+          <Button size="small" color="primary" onClick={handleOpen}>
             Show Details
           </Button>
         </CardActions>
       </Card>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        className={classes.modal}
+      >
+        <div style={modalStyle} className={classes.paper}>
+          hello
+        </div>
+      </Modal>
     </>
   );
 };
