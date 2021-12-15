@@ -4,6 +4,7 @@ import {
   CardActionArea,
   CardActions,
   CardMedia,
+  Grid,
   makeStyles,
   Typography,
 } from "@material-ui/core";
@@ -34,8 +35,17 @@ const useStyles = makeStyles((theme) => ({
 
 const SingleProject = (props) => {
   const classes = useStyles();
-  const { title, investmentToBeRaised, maximumInvestment, minimumInvestment } =
-    props.val;
+  const {
+    title,
+    projectDescription,
+    investmentToBeRaised,
+    maximumInvestment,
+    minimumInvestment,
+    lastDateOfInvestment,
+    expectedDateOfProjectCompletion,
+    returnPerMinimumInvestment,
+    status,
+  } = props.val;
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -87,7 +97,56 @@ const SingleProject = (props) => {
         className={classes.modal}
       >
         <div style={modalStyle} className={classes.paper}>
-          hello
+          <Grid container spacing={2} direction="column">
+            <Grid item>
+              <Typography gutterBottom variant="h5" component="h2">
+                <b>Project Name : </b>
+                {title}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="body2" color="textSecondary" component="p">
+                <b>Investment to be raised : </b>
+                {investmentToBeRaised}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="body2" color="textSecondary" component="p">
+                <b>Maximum Investment : </b>
+                {maximumInvestment}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="body2" color="textSecondary" component="p">
+                <b>Minimum Investment : </b>
+                {minimumInvestment}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="body2" color="textSecondary" component="p">
+                <b>Return per Minimum Investment : </b>
+                {returnPerMinimumInvestment}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="body2" color="textSecondary" component="p">
+                <b>Last Date of Investment : </b>
+                {lastDateOfInvestment}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="body2" color="textSecondary" component="p">
+                <b>Expected Date of Completion : </b>
+                {expectedDateOfProjectCompletion}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="body2" color="textSecondary" component="p">
+                <b>Status of Project : </b>
+                {status}
+              </Typography>
+            </Grid>
+          </Grid>
         </div>
       </Modal>
     </>
