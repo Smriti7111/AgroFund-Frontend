@@ -12,6 +12,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 
 // Context Import
 import { walletContext } from "../../../Context/WalletContext";
@@ -21,6 +22,15 @@ import { getWalletAddress } from "../../../helpers/GetWalletAddress";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import MyAlert from "../../../components/MyAlert";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#06a120",
+    },
+  },
+});
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -158,146 +168,149 @@ export default function SignUpInvestor() {
   };
 
   return (
-    <Container component="main" maxWidth="sm">
-      {alert ? (
-        <MyAlert setAlert={showAlert} severity="error" message={message} />
-      ) : null}
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up as an Investor
-        </Typography>
-        <form method="POST" onSubmit={handleSubmit} className={classes.form}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={12} md={12}>
-              <TextField
-                autoComplete="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                variant="outlined"
-                required
-                fullWidth
-                id="name"
-                label="Name"
-                autoFocus
-              />
+    <MuiThemeProvider theme={theme}>
+      <Container component="main" maxWidth="sm">
+        {alert ? (
+          <MyAlert setAlert={showAlert} severity="error" message={message} />
+        ) : null}
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up as an Investor
+          </Typography>
+          <form method="POST" onSubmit={handleSubmit} className={classes.form}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12} md={12}>
+                <TextField
+                  autoComplete="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="name"
+                  label="Name"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="phone"
+                  label="Phone number"
+                  name="contact"
+                  value={formData.contact}
+                  onChange={handleChange}
+                  autoComplete="number"
+                />
+              </Grid>
+              <Grid item xs={12} md={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="walletAddress"
+                  label="Wallet Address"
+                  name="walletAddress"
+                  value={formData.walletAddress}
+                  onChange={handleChange}
+                  autoComplete="number"
+                />
+              </Grid>
+              <Grid item xs={12} md={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="address"
+                  label="Address"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  autoComplete="address"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} md={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} md={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  label="Confirm Password"
+                  type="password"
+                  autoComplete="current-password"
+                />
+              </Grid>
+              <Grid item xs={12} md={12}>
+                <FormControlLabel
+                  className={classes.root}
+                  name="check"
+                  value={formData.check}
+                  onChange={handleChange}
+                  control={
+                    <Checkbox value="allowExtraEmails" color="primary" />
+                  }
+                  label="I agree to the terms and conditions and privacy policy"
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                autoComplete="email"
-              />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign Up
+            </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link href="/login" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="phone"
-                label="Phone number"
-                name="contact"
-                value={formData.contact}
-                onChange={handleChange}
-                autoComplete="number"
-              />
-            </Grid>
-            <Grid item xs={12} md={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="walletAddress"
-                label="Wallet Address"
-                name="walletAddress"
-                value={formData.walletAddress}
-                onChange={handleChange}
-                autoComplete="number"
-                disabled={true}
-              />
-            </Grid>
-            <Grid item xs={12} md={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="address"
-                label="Address"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                autoComplete="address"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                label="Confirm Password"
-                type="password"
-                autoComplete="current-password"
-              />
-            </Grid>
-            <Grid item xs={12} md={12}>
-              <FormControlLabel
-                className={classes.root}
-                name="check"
-                value={formData.check}
-                onChange={handleChange}
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I agree to the terms and conditions and privacy policy"
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign Up
-          </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link href="/login" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
-    </Container>
+          </form>
+        </div>
+        <Box mt={5}>
+          <Copyright />
+        </Box>
+      </Container>
+    </MuiThemeProvider>
   );
 }
