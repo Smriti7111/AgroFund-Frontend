@@ -70,7 +70,7 @@ export default function Login({ location }) {
   useEffect(() => {
     const getWallet = async () => {
       let address = await getWalletAddress();
-      setWalletAddress(address);
+      setWalletAddress(address.toLowerCase());
     };
     getWallet();
   }, []);
@@ -101,6 +101,7 @@ export default function Login({ location }) {
         data: loginData,
       });
       let resData = res.data;
+
       let token = resData.other.token;
       let userdata = resData.data;
       let msg = "";

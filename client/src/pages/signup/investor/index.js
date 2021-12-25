@@ -80,7 +80,7 @@ export default function SignUpInvestor() {
   useEffect(() => {
     const getWallet = async () => {
       let address = await getWalletAddress();
-      setWalletAddress(address);
+      setWalletAddress(address.toLowerCase());
     };
     getWallet();
   }, []);
@@ -97,11 +97,17 @@ export default function SignUpInvestor() {
       data: formData,
     }).then(
       (response) => {
-        console.log(response);
-        history.push("/login", {
-          message:
-            "You have successfully signed up as an investor. Please login to continue",
-        });
+        console.log("Sign Up response is: ", response.data);
+        if (response.data.message.error) {
+          setMessage(response.data.message.error);
+          showAlert(true);
+        }
+        if (response.data.message.success) {
+          history.push("/login", {
+            message:
+              "You have successfully signed up as an investor. Please login to continue",
+          });
+        }
       },
       (error) => {
         console.log(error);

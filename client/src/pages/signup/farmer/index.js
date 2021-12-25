@@ -80,7 +80,7 @@ export default function SignUpFarmer() {
   useEffect(() => {
     const getWallet = async () => {
       let address = await getWalletAddress();
-      setWalletAddress(address);
+      setWalletAddress(address.toLoweCase());
     };
     getWallet();
   }, []);

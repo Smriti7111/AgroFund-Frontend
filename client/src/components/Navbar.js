@@ -82,7 +82,8 @@ const Navbar = () => {
         );
       } else if (
         conditionArray.indexOf(false) == -1 &&
-        user.isVerified == false
+        user.isVerified == false &&
+        user.requestedForVerification
       ) {
         return (
           <>

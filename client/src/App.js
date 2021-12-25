@@ -1,9 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-// import SimpleStorageContract from "./contracts/SimpleStorage.json";
-// import getWeb3 from "./getWeb3";
+import React, { useContext, useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 
 import "./App.css";
+import { walletContext } from "./Context/WalletContext";
+
+import "./App.css";
+import DashboardFarmer from "./pages/dashboard/farmer/dashboard";
+import DashboardInvestor from "./pages/dashboard/investor/dashboard";
+import DashboardAdmin from "./pages/dashboard/admin/dashboard";
+
+import Login from "./pages/login";
 import SignUpFarmer from "./pages/signup/farmer";
 import SignUpInvestor from "./pages/signup/investor";
 import { useCookies } from "react-cookie";
