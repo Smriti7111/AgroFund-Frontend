@@ -106,14 +106,14 @@ const Navbar = () => {
     <div className={classes.root}>
       <AppBar position="static" style={{ backgroundColor: "#06a120" }}>
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography variant="h6" className={classes.title}>
             Agro Fund
           </Typography>

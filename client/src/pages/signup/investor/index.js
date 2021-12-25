@@ -105,24 +105,24 @@ export default function SignUpInvestor() {
       method: "POST",
       url: "/api/investor",
       data: formData,
-    }).then(
-      (response) => {
-        console.log("Sign Up response is: ", response.data);
-        if (response.data.message.error) {
-          setMessage(response.data.message.error);
-          showAlert(true);
+    })
+      .then(
+        (response) => {
+          if (response.data.message.success) {
+            history.push("/login", {
+              message:
+                "You have successfully signed up as investor. Please login to continue",
+            });
+          } else {
+            showAlert(true);
+            setMessage(response.data.message.error);
+          }
+        },
+        (error) => {
+          console.log(error);
         }
-        if (response.data.message.success) {
-          history.push("/login", {
-            message:
-              "You have successfully signed up as an investor. Please login to continue",
-          });
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      )
+      .catch((e) => console.log(e.message));
   };
 
   const validateForm = () => {

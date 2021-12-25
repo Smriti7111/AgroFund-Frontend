@@ -90,7 +90,7 @@ export default function SignUpFarmer() {
   useEffect(() => {
     const getWallet = async () => {
       let address = await getWalletAddress();
-      setWalletAddress(address.toLoweCase());
+      setWalletAddress(address.toLowerCase());
     };
     getWallet();
   }, []);
@@ -107,11 +107,15 @@ export default function SignUpFarmer() {
       data: formData,
     }).then(
       (response) => {
-        console.log(response);
-        history.push("/login", {
-          message:
-            "You have successfully signed up as farmer. Please login to continue",
-        });
+        if (response.data.message.success) {
+          history.push("/login", {
+            message:
+              "You have successfully signed up as farmer. Please login to continue",
+          });
+        } else {
+          showAlert(true);
+          setMessage(response.data.message.error);
+        }
       },
       (error) => {
         console.log(error);

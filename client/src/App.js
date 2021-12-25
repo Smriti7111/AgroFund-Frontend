@@ -21,6 +21,7 @@ import { useCookies } from "react-cookie";
 import My404Component from "./components/My404Component";
 import VerificationForm from "./components/VerificationForm";
 import PrivateRoute from "./components/PrivateRoute";
+import AdminRoutes from "./Routes/AdminRoutes";
 const axios = require("axios");
 
 const App = () => {
@@ -91,9 +92,11 @@ const App = () => {
             ></Route>
             <PrivateRoute exact path="/createProject" />
             <PrivateRoute exact path="/dashboard" />
+
             <PrivateRoute exact path="/individualFarmerDetail" />
             <PrivateRoute exact path="/individualInvestorDetail" />
             <PrivateRoute exact path="/allFarmerProjects" />
+            <Route path="/dashboard/admin" component={AdminRoutes} />
             <Route path="*" exact component={My404Component} />
           </Switch>
 

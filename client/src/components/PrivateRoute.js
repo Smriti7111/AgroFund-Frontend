@@ -9,6 +9,8 @@ import { useHistory } from "react-router-dom";
 import IndividualFarmerDetail from "../pages/dashboard/farmer/individualFarmerDetail";
 import IndividualInvestorDetail from "../pages/dashboard/investor/individualInvestorDetail";
 import AllProjectsSection from "../components/AllProjectsSection";
+import Farmer from "../pages/dashboard/admin/farmer";
+import DashboardDrawer from "./Dashboard/AdminDrawer";
 
 const PrivateRoute = ({ location, ...rest }) => {
   let session = sessionStorage.getItem("token");
@@ -46,9 +48,14 @@ const PrivateRoute = ({ location, ...rest }) => {
         return <DashboardInvestor showAlert={showAlert} message={message} />;
     }
   }
-  if (session && pathname == "/allFarmerProjects") {
+  if (session && pathname === "/allFarmerProjects") {
     return <AllProjectsSection />;
   }
+
+  if (session && pathname == "/dashboard/admin" && usertype == "0") {
+    return <DashboardDrawer />;
+  }
+
   return <Login location={location} />;
 };
 
