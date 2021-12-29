@@ -128,7 +128,7 @@ export default function DashboardDrawer(props) {
             <Icon className="fas fa-bars"></Icon>
           </IconButton>
           <Typography variant="h6" noWrap>
-            Admin Dashboard
+            {props.title}
           </Typography>
         </Toolbar>
       </AppBar>

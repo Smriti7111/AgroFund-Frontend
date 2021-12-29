@@ -15,6 +15,8 @@ import { useHistory } from "react-router";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import "../App.css";
+import DashboardFarmer from "../pages/dashboard/farmer/dashboard";
+import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +40,14 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#06a120",
+    },
+  },
+});
 
 const CreateProject = () => {
   const classes = useStyles();
@@ -89,128 +99,130 @@ const CreateProject = () => {
 
   return (
     <>
-      <Navbar />
-      <Container component="main" maxWidth="md">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Create a Project
-          </Typography>
-          <form method="POST" className={classes.form} noValidate>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={12} md={12}>
-                <TextField
-                  autoComplete="name"
-                  name="title"
-                  value={formData.project_title}
-                  onChange={handleChange}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="title"
-                  label="Project Title"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  type="number"
-                  id="investmentToBeRaised"
-                  label="Amount to be raised"
-                  name="investmentToBeRaised"
-                  value={formData.investmentToBeRaised}
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  type="number"
-                  id="minimumInvestment"
-                  label="Minimum Investment Amount"
-                  name="minimumInvestment"
-                  value={formData.minimumInvestment}
-                  onChange={handleChange}
-                  autoComplete="number"
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="returnPerMinimumInvestment"
-                  label="Return per Minimum Investment"
-                  name="returnPerMinimumInvestment"
-                  value={formData.returnPerMinimumInvestment}
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12} sm={12} md={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="lastDateOfInvestment"
-                  value={formData.lastDateOfInvestment}
-                  onChange={handleChange}
-                  label="Last date of Investment"
-                  id="lastDateOfInvestment"
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="expectedDateOfProjectCompletion"
-                  name="expectedDateOfProjectCompletion"
-                  value={formData.expectedDateOfProjectCompletion}
-                  onChange={handleChange}
-                  label="Expected date of Project Completion"
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  type="number"
-                  id="maximumInvestment"
-                  name="maximumInvestment"
-                  value={formData.maximumInvestment}
-                  onChange={handleChange}
-                  label="Maximum Investment Amount"
-                />
-              </Grid>
-              <Grid item xs={12} md={12}>
-                <h5>Project Description</h5>
-                <CKEditor
-                  editor={ClassicEditor}
-                  data=""
-                  config={{
-                    ckfinder: {
-                      uploadUrl: "/api/project/uploads",
-                    },
-                    removePlugins: ["MediaEmbed"],
-                    mediaEmbed: {},
-                  }}
-                  onChange={(event, editor) => {
-                    const data = editor.getData();
-                    setFormData({ ...formData, projectDescription: data });
-                    // console.log({ event, editor, data });
-                  }}
-                />
+      {/* <Navbar /> */}
+      <DashboardFarmer>
+        <MuiThemeProvider theme={theme}>
+          <Container component="main" maxWidth="md">
+            <CssBaseline />
+            <div className={classes.paper}>
+              <Avatar className={classes.avatar}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Create a Project
+              </Typography>
+              <form method="POST" className={classes.form} noValidate>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={12} md={12}>
+                    <TextField
+                      autoComplete="name"
+                      name="title"
+                      value={formData.project_title}
+                      onChange={handleChange}
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="title"
+                      label="Project Title"
+                      autoFocus
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      type="number"
+                      id="investmentToBeRaised"
+                      label="Amount to be raised"
+                      name="investmentToBeRaised"
+                      value={formData.investmentToBeRaised}
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      type="number"
+                      id="minimumInvestment"
+                      label="Minimum Investment Amount"
+                      name="minimumInvestment"
+                      value={formData.minimumInvestment}
+                      onChange={handleChange}
+                      autoComplete="number"
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="returnPerMinimumInvestment"
+                      label="Return per Minimum Investment"
+                      name="returnPerMinimumInvestment"
+                      value={formData.returnPerMinimumInvestment}
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={6}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      name="lastDateOfInvestment"
+                      value={formData.lastDateOfInvestment}
+                      onChange={handleChange}
+                      label="Last date of Investment"
+                      id="lastDateOfInvestment"
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="expectedDateOfProjectCompletion"
+                      name="expectedDateOfProjectCompletion"
+                      value={formData.expectedDateOfProjectCompletion}
+                      onChange={handleChange}
+                      label="Expected date of Project Completion"
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      type="number"
+                      id="maximumInvestment"
+                      name="maximumInvestment"
+                      value={formData.maximumInvestment}
+                      onChange={handleChange}
+                      label="Maximum Investment Amount"
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <h5>Project Description</h5>
+                    <CKEditor
+                      editor={ClassicEditor}
+                      data=""
+                      config={{
+                        ckfinder: {
+                          uploadUrl: "/api/project/uploads",
+                        },
+                        removePlugins: ["MediaEmbed"],
+                        mediaEmbed: {},
+                      }}
+                      onChange={(event, editor) => {
+                        const data = editor.getData();
+                        setFormData({ ...formData, projectDescription: data });
+                        // console.log({ event, editor, data });
+                      }}
+                    />
 
-                {/* <TextField
+                    {/* <TextField
                   id="projectDescription"
                   name="projectDescription"
                   value={formData.projectDescription}
@@ -222,23 +234,25 @@ const CreateProject = () => {
                   fullWidth
                   multiline
                 /> */}
-              </Grid>
-            </Grid>
+                  </Grid>
+                </Grid>
 
-            <Button
-              type="submit"
-              onClick={handleSubmit}
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Create Project
-            </Button>
-          </form>
-        </div>
-        <Box mt={5}>{/* <Copyright /> */}</Box>
-      </Container>
+                <Button
+                  type="submit"
+                  onClick={handleSubmit}
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Create Project
+                </Button>
+              </form>
+            </div>
+            <Box mt={5}>{/* <Copyright /> */}</Box>
+          </Container>
+        </MuiThemeProvider>
+      </DashboardFarmer>
     </>
   );
 };

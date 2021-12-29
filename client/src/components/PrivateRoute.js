@@ -25,7 +25,7 @@ const PrivateRoute = ({ location, ...rest }) => {
   } else if (session == null) {
     history.push("/login");
   }
-  if (session && pathname == "/createProject" && usertype == "1") {
+  if (session && pathname == "/dashboard/farmer/createProject" && usertype == "1") {
     return <CreateProject />;
   }
   if (session && usertype == "0") {
@@ -48,7 +48,7 @@ const PrivateRoute = ({ location, ...rest }) => {
         return <DashboardInvestor showAlert={showAlert} message={message} />;
     }
   }
-  if (session && pathname === "/allFarmerProjects") {
+  if (session && pathname === "/dashboard/farmer/allFarmerProjects") {
     return <AllProjectsSection />;
   }
 

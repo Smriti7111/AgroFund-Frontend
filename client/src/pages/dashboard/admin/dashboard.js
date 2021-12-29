@@ -41,7 +41,6 @@ const DashboardAdmin = (props) => {
       icon: "fas fa-seedling",
       link: "/dashboard/admin/projects",
     },
-
     {
       title: "Farmer Requests",
       icon: "fas fa-check",
@@ -57,7 +56,7 @@ const DashboardAdmin = (props) => {
 
   return (
     <>
-      <DashboardDrawer menu={menu}>{props.children}</DashboardDrawer>
+      <DashboardDrawer menu={menu} title="Admin">{props.children}</DashboardDrawer>
     </>
   );
 };

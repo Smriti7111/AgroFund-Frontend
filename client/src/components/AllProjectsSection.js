@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import SingleProject from "./SingleProject";
 import Navbar from "./Navbar";
 import { makeStyles } from "@material-ui/core";
+import DashboardFarmer from "../pages/dashboard/farmer/dashboard";
 
 const useStyles = makeStyles({
   root: {
@@ -29,32 +30,33 @@ const AllProjectsSection = () => {
 
   return (
     <>
-      <Navbar className={classes.root} />
-      <Grid
-        container
-        spacing={3}
-        alignItems="center"
-        justifyContent="center"
-        style={{ marginTop: 30 }}
-        className={classes.root}
-      >
-        {allProjects &&
-          allProjects.map((value, index) => {
-            return (
-              <Grid
-                item
-                container
-                xs={12}
-                md={4}
-                key={index}
-                alignItems="center"
-                justifyContent="center"
-              >
-                <SingleProject val={value} />
-              </Grid>
-            );
-          })}
-      </Grid>
+      <DashboardFarmer>
+        <Grid
+          container
+          spacing={3}
+          alignItems="center"
+          justifyContent="center"
+          style={{ marginTop: 30 }}
+          className={classes.root}
+        >
+          {allProjects &&
+            allProjects.map((value, index) => {
+              return (
+                <Grid
+                  item
+                  container
+                  xs={12}
+                  md={4}
+                  key={index}
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <SingleProject val={value} />
+                </Grid>
+              );
+            })}
+        </Grid>
+      </DashboardFarmer>
     </>
   );
 };

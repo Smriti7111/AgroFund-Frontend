@@ -59,7 +59,7 @@ const Navbar = () => {
   };
 
   const viewProjects = () => {
-    history.push("/allFarmerProjects");
+    history.push("/dashboard/farmer/allFarmerProjects");
   };
 
   const showButton = () => {
