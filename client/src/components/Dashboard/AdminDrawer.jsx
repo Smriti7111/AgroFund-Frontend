@@ -27,6 +27,7 @@ import {
   Link,
 } from "react-router-dom";
 import Farmer from "../../pages/dashboard/admin/farmer";
+import axios from "axios";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -97,6 +98,7 @@ export default function DashboardDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  let usertype = sessionStorage.getItem("usertype");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -104,6 +106,33 @@ export default function DashboardDrawer(props) {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const directTo = (link,title) => {
+    if (title = 'Verify') {
+      handleVerify();
+    }
+    history.push(link)
+  }
+
+  const handleVerify = () => {
+    sendVerificationCode();
+    history.push("/verificationForm");
+  }
+
+  const sendVerificationCode = async () => {
+    let id = JSON.parse(sessionStorage.getItem("userdata"))._id;
+    if (usertype == 1) {
+      await axios({
+        method: "GET",
+        url: `/api/farmer/getVerificationCode/${id}`,
+      });
+    } else if (usertype == 2) {
+      await axios({
+        method: "GET",
+        url: `/api/investor/getVerificationCode/${id}`,
+      });
+    }
   };
 
   return (
@@ -162,7 +191,7 @@ export default function DashboardDrawer(props) {
                   <ListItem
                     button
                     key={index}
-                    onClick={() => history.push(menu.link)}
+                    onClick={() => directTo(menu.link, menu.title)}
                   >
                     <ListItemIcon>
                       <Icon className={menu.icon}></Icon>

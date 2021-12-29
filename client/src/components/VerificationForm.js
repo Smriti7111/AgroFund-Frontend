@@ -5,6 +5,8 @@ import axios from "axios";
 import DocumentVerificationForm from "./DocumentVerificationForm";
 import { makeStyles, Grid, CardMedia, Card } from "@material-ui/core";
 import Navbar from "../components/Navbar";
+import DashboardFarmer from "../pages/dashboard/farmer/dashboard";
+import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   root: {
@@ -20,6 +22,15 @@ const useStyles = makeStyles({
     margin: "21px",
   },
 });
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#06a120",
+    },
+  },
+});
+
 const VerificationForm = () => {
   const [verificationCode, setVerificationCode] = useState({
     code: "",
@@ -64,47 +75,53 @@ const VerificationForm = () => {
   };
   return phoneverify ? (
     <>
-      <Navbar />
-      <DocumentVerificationForm />
+      <MuiThemeProvider theme={theme}>
+        <DashboardFarmer>
+          <DocumentVerificationForm />
+        </DashboardFarmer>
+      </MuiThemeProvider>
     </>
   ) : (
     <>
-      <Navbar />
-      <Grid container spacing={3} className={classes.root}>
-        <Grid
-          container
-          item
-          justifyContent="center"
-          alignItems="center"
-          className={classes.card}
-        >
-          <Card variant="outlined">
-            <Grid container item className={classes.root1}>
-              <form method="POST" onSubmit={handleSubmit}>
-                <Grid item>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    id="code"
-                    label="Enter 6 digit code sent to mobile you registered"
-                    name="code"
-                    value={verificationCode.code}
-                    onChange={handleChange}
-                    autoFocus
-                  />
-                </Grid>
+      <MuiThemeProvider>
+        <DashboardFarmer>
+          <Grid container spacing={3} className={classes.root}>
+            <Grid
+              container
+              item
+              justifyContent="center"
+              alignItems="center"
+              className={classes.card}
+            >
+              <Card variant="outlined">
+                <Grid container item className={classes.root1}>
+                  <form method="POST" onSubmit={handleSubmit}>
+                    <Grid item>
+                      <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        id="code"
+                        label="Enter 6 digit code sent to mobile you registered"
+                        name="code"
+                        value={verificationCode.code}
+                        onChange={handleChange}
+                        autoFocus
+                      />
+                    </Grid>
 
-                <Grid item>
-                  <Button type="submit" variant="contained" color="primary">
-                    Verify Code
-                  </Button>
+                    <Grid item>
+                      <Button type="submit" variant="contained" color="primary">
+                        Verify Code
+                      </Button>
+                    </Grid>
+                  </form>
                 </Grid>
-              </form>
+              </Card>
             </Grid>
-          </Card>
-        </Grid>
-      </Grid>
+          </Grid>
+        </DashboardFarmer>
+      </MuiThemeProvider>
     </>
   );
 };
