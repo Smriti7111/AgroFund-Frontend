@@ -17,9 +17,11 @@ import DashboardAdmin from "./pages/dashboard/admin/dashboard";
 import Login from "./pages/login";
 import SignUpFarmer from "./pages/signup/farmer";
 import SignUpInvestor from "./pages/signup/investor";
-import CreateProject from "./components/CreateProject";
 import { useCookies } from "react-cookie";
 import My404Component from "./components/My404Component";
+import VerificationForm from "./components/VerificationForm";
+import PrivateRoute from "./components/PrivateRoute";
+import AdminRoutes from "./Routes/AdminRoutes";
 const axios = require("axios");
 
 const App = () => {
@@ -69,31 +71,6 @@ const App = () => {
   //   }
   // };
 
-  const PrivateRoute = ({ location, ...rest }) => {
-    let session = sessionStorage.getItem("token");
-    let pathname = location.pathname;
-    let state = location.state;
-    const showAlert = state ? state.showAlert : "false";
-
-    if (session == null) {
-      return <Login />;
-    }
-    let other = cookies.User.other;
-    if (pathname == "/createProject" && other.userType == 1) {
-      return <CreateProject />;
-    }
-    if (pathname == "/dashboard" || pathname == "/login") {
-      switch (other.userType) {
-        case 0:
-          return <DashboardAdmin showAlert={showAlert} />;
-        case 1:
-          return <DashboardFarmer showAlert={showAlert} />;
-        case 2:
-          return <DashboardInvestor showAlert={showAlert} />;
-      }
-    }
-  };
-
   // state = { web3: null, accounts: null, contract: null };
 
   return (
@@ -105,11 +82,21 @@ const App = () => {
             <Route exact path="/signup-farmer" component={SignUpFarmer}></Route>
             <Route
               exact
+              path="/verificationForm"
+              component={VerificationForm}
+            ></Route>
+            <Route
+              exact
               path="/signup-investor"
               component={SignUpInvestor}
             ></Route>
             <PrivateRoute exact path="/createProject" />
             <PrivateRoute exact path="/dashboard" />
+
+            <PrivateRoute exact path="/individualFarmerDetail" />
+            <PrivateRoute exact path="/individualInvestorDetail" />
+            <PrivateRoute exact path="/allFarmerProjects" />
+            <Route path="/dashboard/admin" component={AdminRoutes} />
             <Route path="*" exact component={My404Component} />
           </Switch>
 

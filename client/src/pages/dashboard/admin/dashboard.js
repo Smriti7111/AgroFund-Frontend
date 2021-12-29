@@ -1,21 +1,63 @@
-import React, { useState } from "react";
-import Navbar from "../../../components/Navbar";
-import MyAlert from "../../../components/MyAlert";
+import React, { useState, useEffect } from "react";
+
+import DashboardDrawer from "../../../components/Dashboard/AdminDrawer";
+
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 400,
+  },
+  root: {
+    width: "100%",
+  },
+});
 
 const DashboardAdmin = (props) => {
-  const { showAlert } = props;
-  const [alert, setAlert] = useState(showAlert);
+  const { showAlert, message } = props;
+
+  const classes = useStyles();
+
+  // Menu to be shown in sidebar of admin dashboard
+  const menu = [
+    {
+      title: "Home",
+      icon: "fas fa-home",
+      link: "/dashboard",
+    },
+    {
+      title: "Farmer",
+      icon: "fas fa-spa",
+      link: "/dashboard/admin/farmers",
+    },
+
+    {
+      title: "Investor",
+      icon: "fab fa-btc",
+      link: "/dashboard/admin/investors",
+    },
+    {
+      title: "Project",
+      icon: "fas fa-seedling",
+      link: "/dashboard/admin/projects",
+    },
+
+    {
+      title: "Farmer Requests",
+      icon: "fas fa-check",
+      link: "/dashboard/admin/requests/farmer",
+    },
+
+    {
+      title: "Investor Requests",
+      icon: "fas fa-check-circle",
+      link: "/dashboard/admin/requests/investor",
+    },
+  ];
+
   return (
     <>
-      {alert ? (
-        <MyAlert
-          setAlert={setAlert}
-          severity="success"
-          message="Successfully logged in as an admin!"
-        />
-      ) : null}
-      <Navbar />
-      <h1>Logged in as an admin</h1>
+      <DashboardDrawer menu={menu}>{props.children}</DashboardDrawer>
     </>
   );
 };

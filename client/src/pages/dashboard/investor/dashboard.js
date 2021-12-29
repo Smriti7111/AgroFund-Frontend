@@ -3,16 +3,14 @@ import Navbar from "../../../components/Navbar";
 import MyAlert from "../../../components/MyAlert";
 
 const DashboardInvestor = (props) => {
-  const { showAlert } = props;
+  const { showAlert, message } = props;
   const [alert, setAlert] = useState(showAlert);
   return (
     <>
-      {alert ? (
-        <MyAlert
-          setAlert={setAlert}
-          severity="success"
-          message="Successfully logged in as an investor!"
-        />
+      {message ? (
+        alert ? (
+          <MyAlert setAlert={setAlert} severity="success" message={message} />
+        ) : null
       ) : null}
       <Navbar />
       <h1>Logged in as an investor</h1>
