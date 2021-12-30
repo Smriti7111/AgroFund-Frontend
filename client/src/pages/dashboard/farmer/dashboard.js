@@ -18,17 +18,6 @@ const DashboardFarmer = (props) => {
       icon: "fas fa-spa",
       // link: "/dashboard/admin/farmers",
     },
-
-    {
-      title: "Create Project",
-      icon: "fab fa-btc",
-      link: "/dashboard/farmer/createProject",
-    },
-    {
-      title: "See my Project",
-      icon: "fas fa-seedling",
-      link: "/dashboard/farmer/allFarmerProjects",
-    },
     {
       title: "Investment Requests",
       icon: "fas fa-check",

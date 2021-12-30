@@ -83,7 +83,7 @@ const VerificationForm = () => {
     </>
   ) : (
     <>
-      <MuiThemeProvider>
+      <MuiThemeProvider theme={theme}>
         <DashboardFarmer>
           <Grid container spacing={3} className={classes.root}>
             <Grid
@@ -109,7 +109,6 @@ const VerificationForm = () => {
                         autoFocus
                       />
                     </Grid>
-
                     <Grid item>
                       <Button type="submit" variant="contained" color="primary">
                         Verify Code

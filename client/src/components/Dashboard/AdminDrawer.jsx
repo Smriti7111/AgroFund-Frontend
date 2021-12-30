@@ -115,9 +115,63 @@ export default function DashboardDrawer(props) {
     history.push(link)
   }
 
+  const handleTitle = (title) => {
+    if (title == 'Verify') {
+      return handleVerificationStatus();
+    } else {
+    return title;
+  }
+  }
+
+  const handleVerificationStatus = () => {
+    let user = JSON.parse(sessionStorage.getItem("userdata"));
+    const conditionArray = [
+      user.hasPhoneVerified,
+      user.citizenshipNo != "",
+      user.citizenship != "",
+      user.panNo != "",
+      user.pan != "",
+    ];
+    if (usertype != 0) {
+      if (user.hasProject) {
+        return "View my Project";
+      } else if (!user.hasProject && user.isVerified) {
+        return "Create a Project";
+      } else if (
+      conditionArray.indexOf(false) == -1 &&
+      user.isVerified == false &&
+      user.requestedForVerification
+    ) {
+      return "Pending Verification";
+    } else {
+      return "Verify";
+    }}
+  }
+
   const handleVerify = () => {
+    let user = JSON.parse(sessionStorage.getItem("userdata"));
+    const conditionArray = [
+      user.hasPhoneVerified,
+      user.citizenshipNo != "",
+      user.citizenship != "",
+      user.panNo != "",
+      user.pan != "",
+    ];
+    if (usertype != 0) {
+      if (user.hasProject) {
+        history.push("/dashboard/farmer/allFarmerProjects")
+      } else if (!user.hasProject && user.isVerified) {
+        history.push("/dashboard/farmer/createProject")
+      } else if (
+      conditionArray.indexOf(false) == -1 &&
+      user.isVerified == false &&
+      user.requestedForVerification
+    ) {
+      return;
+    } else {
+      history.push("/verificationForm");
+    }}
     sendVerificationCode();
-    history.push("/verificationForm");
   }
 
   const sendVerificationCode = async () => {
@@ -197,7 +251,8 @@ export default function DashboardDrawer(props) {
                       <Icon className={menu.icon}></Icon>
                     </ListItemIcon>
 
-                    <ListItemText primary={menu.title} />
+                    {/* <ListItemText primary={menu.title} /> */}
+                    <ListItemText primary={handleTitle(menu.title)} />
                   </ListItem>
                 </Tooltip>
               ))
