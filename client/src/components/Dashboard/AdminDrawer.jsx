@@ -91,6 +91,11 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+
+  logoutButton: {
+    justifySelf: "flex-end",
+    marginLeft: "auto",
+  },
 }));
 
 export default function DashboardDrawer(props) {
@@ -108,20 +113,26 @@ export default function DashboardDrawer(props) {
     setOpen(false);
   };
 
-  const directTo = (link,title) => {
-    if (title = 'Verify') {
+  const handleLogout = () => {
+    sessionStorage.setItem("token", "");
+    sessionStorage.clear();
+    history.push("/login");
+  };
+
+  const directTo = (link, title) => {
+    if ((title = "Verify")) {
       handleVerify();
     }
-    history.push(link)
-  }
+    history.push(link);
+  };
 
   const handleTitle = (title) => {
-    if (title == 'Verify') {
+    if (title == "Verify") {
       return handleVerificationStatus();
     } else {
-    return title;
-  }
-  }
+      return title;
+    }
+  };
 
   const handleVerificationStatus = () => {
     let user = JSON.parse(sessionStorage.getItem("userdata"));
@@ -138,15 +149,16 @@ export default function DashboardDrawer(props) {
       } else if (!user.hasProject && user.isVerified) {
         return "Create a Project";
       } else if (
-      conditionArray.indexOf(false) == -1 &&
-      user.isVerified == false &&
-      user.requestedForVerification
-    ) {
-      return "Pending Verification";
-    } else {
-      return "Verify";
-    }}
-  }
+        conditionArray.indexOf(false) == -1 &&
+        user.isVerified == false &&
+        user.requestedForVerification
+      ) {
+        return "Pending Verification";
+      } else {
+        return "Verify";
+      }
+    }
+  };
 
   const handleVerify = () => {
     let user = JSON.parse(sessionStorage.getItem("userdata"));
@@ -159,20 +171,21 @@ export default function DashboardDrawer(props) {
     ];
     if (usertype != 0) {
       if (user.hasProject) {
-        history.push("/dashboard/farmer/allFarmerProjects")
+        history.push("/dashboard/farmer/allFarmerProjects");
       } else if (!user.hasProject && user.isVerified) {
-        history.push("/dashboard/farmer/createProject")
+        history.push("/dashboard/farmer/createProject");
       } else if (
-      conditionArray.indexOf(false) == -1 &&
-      user.isVerified == false &&
-      user.requestedForVerification
-    ) {
-      return;
-    } else {
-      history.push("/verificationForm");
-    }}
+        conditionArray.indexOf(false) == -1 &&
+        user.isVerified == false &&
+        user.requestedForVerification
+      ) {
+        return;
+      } else {
+        history.push("/verificationForm");
+      }
+    }
     sendVerificationCode();
-  }
+  };
 
   const sendVerificationCode = async () => {
     let id = JSON.parse(sessionStorage.getItem("userdata"))._id;
@@ -210,9 +223,22 @@ export default function DashboardDrawer(props) {
           >
             <Icon className="fas fa-bars"></Icon>
           </IconButton>
+
           <Typography variant="h6" noWrap>
             {props.title}
           </Typography>
+
+          <Tooltip title="Log Out">
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="end"
+              className={clsx(classes.menuButton, classes.logoutButton)}
+              onClick={handleLogout}
+            >
+              <Icon className="fas fa-sign-out-alt"></Icon>
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </AppBar>
       <Drawer

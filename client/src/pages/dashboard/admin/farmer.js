@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import DashboardAdmin from "./dashboard";
 import Table from "../../../components/Dashboard/Table";
 import axios from "axios";
+import Request from "./FarmerRequest";
 
 const columns = [
   {
@@ -37,7 +38,7 @@ const columns = [
 const actions = [
   {
     icon: "delete",
-    tooltip: "Remove User",
+    tooltip: "Remove Farmer",
     onClick: (event, rowData) => {
       // Do save operation
     },
@@ -67,6 +68,7 @@ const Farmer = () => {
         column={columns}
         data={farmers}
         actions={actions}
+        // detailPanel={() => Request}
       />
     </DashboardAdmin>
   );

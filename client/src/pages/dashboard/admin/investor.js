@@ -33,7 +33,7 @@ const columns = [
 const actions = [
   {
     icon: "delete",
-    tooltip: "Remove User",
+    tooltip: "Remove Investor",
     onClick: (event, rowData) => {
       // Do save operation
     },
